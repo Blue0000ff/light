@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>简单记 on 灯塔</title>
-        <link>https://kylin.moe/categories/%E7%AE%80%E5%8D%95%E8%AE%B0/</link>
-        <description>Recent content in 简单记 on 灯塔</description>
+        <title>docker on 灯塔</title>
+        <link>https://kylin.moe/tags/docker/</link>
+        <description>Recent content in docker on 灯塔</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh</language>
-        <lastBuildDate>Wed, 10 Aug 2022 16:22:29 +0800</lastBuildDate><atom:link href="https://kylin.moe/categories/%E7%AE%80%E5%8D%95%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 10 Aug 2022 16:22:29 +0800</lastBuildDate><atom:link href="https://kylin.moe/tags/docker/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>简单记录一下docker相关命令</title>
         <link>https://kylin.moe/p/%E7%AE%80%E5%8D%95%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%8Bdocker%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4/</link>
         <pubDate>Wed, 10 Aug 2022 16:22:29 +0800</pubDate>

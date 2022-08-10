@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='docker 容器 Docker 把代码及其所有依赖打包的一个标准单元，可以把一个程序从一个环境快速可靠的移植到另一个环境上运行。Docker 镜像是一个完整的、可靠的、独立的软件包，其中包含了运行程序所需要的一切。
+下载安装 官网下载 查找镜像 基本概念 Docker 的运行需要容器和镜像，镜像需要人来打包制作，容器在 Docker 运行镜像时会自动生成。或者我们可以手动生成容器，并使用参数来指定容器的名称、使用端口等信息。
+容器和镜像的区别
+镜像只能运行在底层内核上，通常只能用作一次性使用，不能保存保留任何数据。使用命令 docker run [镜像名] 的时候 docker 会自动生成一个容器，我们使用 docker exec 进入的通常都是容器而不是镜像。
+安装完成后使用 docker version 或 docker info 查看docker版本
+基础命令 通常使用docker的步骤包括但不限于
+查找镜像
+下载镜像
+运行镜像 - 创建容器
+进入容器
+停止容器
+启动容器
+删除容器
+删除镜像
+本章将按照步骤介绍常用命令以及所对应含义
+在此之前需要先掌握几条基本命令
+查看本地镜像：docker images 查看本地所有容器 docker ps -a 查看正在运行中的容器 docker ps 因为镜像没有运行这一说，所以使用 docker ps 命令实际上查看的是正在运行中的容器。
+1. 查找镜像 1-1 命令行查找远程镜像
+搜索镜像：docker search 名称 查看镜像 curl https://registry.hub.docker.com/v1/repositories/镜像名称/tags
+tags 根据镜像而定或多或少，更好的方式是通过网页点击查看历史 tags'><title>简单记录一下docker相关命令</title>
+
+<link rel='canonical' href='https://kylin.moe/p/%E7%AE%80%E5%8D%95%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%8Bdocker%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4/'>
+
+<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='简单记录一下docker相关命令'>
+<meta property='og:description' content='docker 容器 Docker 把代码及其所有依赖打包的一个标准单元，可以把一个程序从一个环境快速可靠的移植到另一个环境上运行。Docker 镜像是一个完整的、可靠的、独立的软件包，其中包含了运行程序所需要的一切。
+下载安装 官网下载 查找镜像 基本概念 Docker 的运行需要容器和镜像，镜像需要人来打包制作，容器在 Docker 运行镜像时会自动生成。或者我们可以手动生成容器，并使用参数来指定容器的名称、使用端口等信息。
+容器和镜像的区别
+镜像只能运行在底层内核上，通常只能用作一次性使用，不能保存保留任何数据。使用命令 docker run [镜像名] 的时候 docker 会自动生成一个容器，我们使用 docker exec 进入的通常都是容器而不是镜像。
+安装完成后使用 docker version 或 docker info 查看docker版本
+基础命令 通常使用docker的步骤包括但不限于
+查找镜像
+下载镜像
+运行镜像 - 创建容器
+进入容器
+停止容器
+启动容器
+删除容器
+删除镜像
+本章将按照步骤介绍常用命令以及所对应含义
+在此之前需要先掌握几条基本命令
+查看本地镜像：docker images 查看本地所有容器 docker ps -a 查看正在运行中的容器 docker ps 因为镜像没有运行这一说，所以使用 docker ps 命令实际上查看的是正在运行中的容器。
+1. 查找镜像 1-1 命令行查找远程镜像
+搜索镜像：docker search 名称 查看镜像 curl https://registry.hub.docker.com/v1/repositories/镜像名称/tags
+tags 根据镜像而定或多或少，更好的方式是通过网页点击查看历史 tags'>
+<meta property='og:url' content='https://kylin.moe/p/%E7%AE%80%E5%8D%95%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%8Bdocker%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4/'>
+<meta property='og:site_name' content='灯塔'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='docker' /><meta property='article:tag' content='docker-compose' /><meta property='article:published_time' content='2022-08-10T16:22:29&#43;08:00'/><meta property='article:modified_time' content='2022-08-10T16:22:29&#43;08:00'/>
+<meta name="twitter:title" content="简单记录一下docker相关命令">
+<meta name="twitter:description" content="docker 容器 Docker 把代码及其所有依赖打包的一个标准单元，可以把一个程序从一个环境快速可靠的移植到另一个环境上运行。Docker 镜像是一个完整的、可靠的、独立的软件包，其中包含了运行程序所需要的一切。
+下载安装 官网下载 查找镜像 基本概念 Docker 的运行需要容器和镜像，镜像需要人来打包制作，容器在 Docker 运行镜像时会自动生成。或者我们可以手动生成容器，并使用参数来指定容器的名称、使用端口等信息。
+容器和镜像的区别
+镜像只能运行在底层内核上，通常只能用作一次性使用，不能保存保留任何数据。使用命令 docker run [镜像名] 的时候 docker 会自动生成一个容器，我们使用 docker exec 进入的通常都是容器而不是镜像。
+安装完成后使用 docker version 或 docker info 查看docker版本
+基础命令 通常使用docker的步骤包括但不限于
+查找镜像
+下载镜像
+运行镜像 - 创建容器
+进入容器
+停止容器
+启动容器
+删除容器
+删除镜像
+本章将按照步骤介绍常用命令以及所对应含义
+在此之前需要先掌握几条基本命令
+查看本地镜像：docker images 查看本地所有容器 docker ps -a 查看正在运行中的容器 docker ps 因为镜像没有运行这一说，所以使用 docker ps 命令实际上查看的是正在运行中的容器。
+1. 查找镜像 1-1 命令行查找远程镜像
+搜索镜像：docker search 名称 查看镜像 curl https://registry.hub.docker.com/v1/repositories/镜像名称/tags
+tags 根据镜像而定或多或少，更好的方式是通过网页点击查看历史 tags">
+    <link rel="shortcut icon" href="https://www.bilibili.com/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hucf0891fb607ba1786189e7722321c328_82097_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">灯塔</a></h1>
+            <h2 class="site-description">爆裂吧,现实！粉碎吧,精神！Banishiment this world！</h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>首页</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E7%AE%80%E5%8D%95%E8%AE%B0/" >
+                简单记
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E7%AE%80%E5%8D%95%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%8Bdocker%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4/">简单记录一下docker相关命令</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 10, 2022</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="docker">docker</h1>
+<p>容器 Docker 把代码及其所有依赖打包的一个标准单元，可以把一个程序从一个环境快速可靠的移植到另一个环境上运行。Docker 镜像是一个完整的、可靠的、独立的软件包，其中包含了运行程序所需要的一切。</p>
+<h2 id="下载安装">下载安装</h2>
+<ul>
+<li><a class="link" href="https://www.docker.com/get-started/"  target="_blank" rel="noopener"
+    >官网下载</a></li>
+<li><a class="link" href="https://hub.docker.com/"  target="_blank" rel="noopener"
+    >查找镜像</a></li>
+</ul>
+<h2 id="基本概念">基本概念</h2>
+<p>Docker 的运行需要<code>容器</code>和<code>镜像</code>，镜像需要人来打包制作，容器在 Docker 运行镜像时会自动生成。或者我们可以手动生成容器，并使用参数来指定容器的名称、使用端口等信息。</p>
+<p><strong>容器和镜像的区别</strong></p>
+<p>镜像只能运行在底层内核上，通常只能用作一次性使用，不能保存保留任何数据。使用命令 <code>docker run [镜像名]</code> 的时候 docker 会自动生成一个容器，我们使用 <code>docker exec</code> 进入的通常都是容器而不是镜像。</p>
+<p>安装完成后使用 <code>docker version</code> 或 <code>docker info</code> 查看docker版本</p>
+<h2 id="基础命令">基础命令</h2>
+<p>通常使用docker的步骤包括但不限于</p>
+<ol>
+<li>
+<p>查找镜像</p>
+</li>
+<li>
+<p>下载镜像</p>
+</li>
+<li>
+<p>运行镜像 - 创建容器</p>
+</li>
+<li>
+<p>进入容器</p>
+</li>
+<li>
+<p>停止容器</p>
+</li>
+<li>
+<p>启动容器</p>
+</li>
+<li>
+<p>删除容器</p>
+</li>
+<li>
+<p>删除镜像</p>
+</li>
+</ol>
+<p>本章将按照步骤介绍常用命令以及所对应含义</p>
+<p>在此之前需要先掌握几条基本命令</p>
+<ul>
+<li>查看本地镜像：<code>docker images</code></li>
+<li>查看本地所有容器 <code>docker ps -a</code></li>
+<li>查看正在运行中的容器 <code>docker ps</code></li>
+</ul>
+<p>因为镜像没有运行这一说，所以使用 <code>docker ps</code> 命令实际上查看的是正在运行中的容器。</p>
+<h3 id="1-查找镜像">1. 查找镜像</h3>
+<p>1-1 命令行查找远程镜像</p>
+<p>搜索镜像：<code>docker search 名称</code>
+查看镜像 <code>curl https://registry.hub.docker.com/v1/repositories/镜像名称/tags</code></p>
+<p>tags 根据镜像而定或多或少，更好的方式是通过网页点击查看历史 tags</p>
+<p>1-2 Docker Hub 网页查找镜像</p>
+<p>通过 <a class="link" href="https://hub.docker.com/"  target="_blank" rel="noopener"
+    >Docker Hub</a> 查找需要的镜像，找到 tags 标签</p>
+<h3 id="2-下载镜像">2. 下载镜像</h3>
+<p><code>docker pull [REPOSITORY[:TAG]]</code></p>
+<p>完整 TAG 可以通过不同方式获取，在页面上可以通过 Docker Pull Command 提供的命令进行下载</p>
+<h3 id="3-运行镜像">3. 运行镜像</h3>
+<p>在运行镜像时 docker 会自动生成一个提供访问和服务的容器并运行，我们可以通过参数指定这个容器的部分参数</p>
+<p>通过 <code>docker images</code> 可以查看镜像对应的ID</p>
+<p><code>docker run 镜像ID</code> 可以通过镜像创建并且运行容器</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker run [options] 镜像ID
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">options:
+</span></span><span class="line"><span class="cl">	--name 指定容器名称
+</span></span><span class="line"><span class="cl">	-p  指定容器提供服务的端口
+</span></span><span class="line"><span class="cl">	-i  创建交互式
+</span></span><span class="line"><span class="cl">	-d  后台运行容器
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用 <code>docker ps</code> 可以查看所有正在运行中的容器</p>
+<h3 id="4-进入容器">4. 进入容器</h3>
+<p><code>docker exec -it 容器ID或名称 /bin/bash</code></p>
+<p>可以通过容器ID或通过创建容器时指定的名称进入，如果没有指定名称那么则由 docker 随机生成</p>
+<p><code>/bin/bash</code> 则是指定进入容器所使用的 shell，可以更换为 <code>/bin/sh</code> 或是 <code>/bin/zsh</code> 等</p>
+<h3 id="5-停止容器">5. 停止容器</h3>
+<p><code>docker stop [容器ID 或 容器名]</code></p>
+<h3 id="6-启动容器">6. 启动容器</h3>
+<p>启动指定容器 <code>docker start [容器ID 或 容器名]</code></p>
+<h3 id="6-删除容器">6. 删除容器</h3>
+<p><code>docker rm [容器ID 或 容器名]</code></p>
+<h3 id="7-删除镜像">7. 删除镜像</h3>
+<p><code>docker rmi [OPTIONS] [镜像ID]</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Options:
+</span></span><span class="line"><span class="cl">  -f, --force      强制删除镜像
+</span></span><span class="line"><span class="cl">      --no-prune   不删除没有附带标签的父级镜像
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="拓展用法">拓展用法</h2>
+<h3 id="导出镜像">导出镜像</h3>
+<p>将容器导出为 tar 压缩包 <code>docker export [容器ID 或 容器名] &gt; [名称].tar</code></p>
+<h3 id="导入镜像">导入镜像</h3>
+<p>将快照导入到镜像 <code>cat [名称].tar | docker import - [容器名]</code></p>
+<p>通过 URL 导入容器 <code>docker import http://example.com/exampleimage.tgz</code></p>
+<h3 id="网络端口">网络端口</h3>
+<p><code>docker ps</code> 可以查看容器的端口映射，<code>docker port</code> 可以查看指定（ID或容器名）容器的端口映射具体情况</p>
+<p>查看端口映射情况 <code>docker port [容器ID 或 容器名]</code></p>
+<h3 id="容器状态">容器状态</h3>
+<p><strong>查看容器内的标准输出</strong> <code>docker logs [容器ID 或 容器名]</code></p>
+<p>查看容器内部日志 <code>docker logs -f [容器ID 或 容器名]</code></p>
+<p>查看容器内部运行的程序 <code>docker top [容器ID 或 容器名]</code></p>
+<p>使用 <code>docker inspect [容器ID 或 容器名]</code> 来查看 docker 的底层信息。它会返回一个记录着 docker 容器配置和状态信息的 JSON 格式文件。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/docker/">docker</a>
+        
+            <a href="/tags/docker-compose/">docker-compose</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    
+
+    
+    
+    <section class="powerby" style="font-size: 13px;text-align: center;">
+
+        Powerby
+        <a href="https://gohugo.io/" target="_blank"><span style="text-decoration:underline">Hugo</span></a>
+        Theme
+        <a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank"><span style="text-decoration:underline">stack</span></a>
+
+    </section>
+
+    
+    <section class="powerby" style="font-size: 13px;text-align: center;">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <span id="busuanzi_container_site_pv">总访问量 <span id="busuanzi_value_site_pv"></span> 次</span>
+        <span id="busuanzi_container_site_pv">总访客数 <span id="busuanzi_value_site_uv"></span> 人</span>
+    </section>
+
+    
+
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#下载安装">下载安装</a></li>
+    <li><a href="#基本概念">基本概念</a></li>
+    <li><a href="#基础命令">基础命令</a>
+      <ol>
+        <li><a href="#1-查找镜像">1. 查找镜像</a></li>
+        <li><a href="#2-下载镜像">2. 下载镜像</a></li>
+        <li><a href="#3-运行镜像">3. 运行镜像</a></li>
+        <li><a href="#4-进入容器">4. 进入容器</a></li>
+        <li><a href="#5-停止容器">5. 停止容器</a></li>
+        <li><a href="#6-启动容器">6. 启动容器</a></li>
+        <li><a href="#6-删除容器">6. 删除容器</a></li>
+        <li><a href="#7-删除镜像">7. 删除镜像</a></li>
+      </ol>
+    </li>
+    <li><a href="#拓展用法">拓展用法</a>
+      <ol>
+        <li><a href="#导出镜像">导出镜像</a></li>
+        <li><a href="#导入镜像">导入镜像</a></li>
+        <li><a href="#网络端口">网络端口</a></li>
+        <li><a href="#容器状态">容器状态</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
