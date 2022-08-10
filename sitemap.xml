@@ -3,37 +3,19 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://kylin.moe/</loc>
-    <lastmod>2022-08-10T16:22:29+08:00</lastmod>
-  </url><url>
-    <loc>https://kylin.moe/categories/</loc>
-    <lastmod>2022-08-10T16:22:29+08:00</lastmod>
-  </url><url>
-    <loc>https://kylin.moe/tags/docker/</loc>
-    <lastmod>2022-08-10T16:22:29+08:00</lastmod>
-  </url><url>
-    <loc>https://kylin.moe/tags/docker-compose/</loc>
-    <lastmod>2022-08-10T16:22:29+08:00</lastmod>
-  </url><url>
-    <loc>https://kylin.moe/post/</loc>
-    <lastmod>2022-08-10T16:22:29+08:00</lastmod>
-  </url><url>
-    <loc>https://kylin.moe/tags/</loc>
-    <lastmod>2022-08-10T16:22:29+08:00</lastmod>
-  </url><url>
-    <loc>https://kylin.moe/categories/%E7%AE%80%E5%8D%95%E8%AE%B0/</loc>
-    <lastmod>2022-08-10T16:22:29+08:00</lastmod>
-  </url><url>
-    <loc>https://kylin.moe/p/%E7%AE%80%E5%8D%95%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%8Bdocker%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4/</loc>
-    <lastmod>2022-08-10T16:22:29+08:00</lastmod>
+    <lastmod>2022-08-10T17:16:45+08:00</lastmod>
   </url><url>
     <loc>https://kylin.moe/tags/cors/</loc>
-    <lastmod>2022-08-09T14:01:02+08:00</lastmod>
+    <lastmod>2022-08-10T17:16:45+08:00</lastmod>
   </url><url>
-    <loc>https://kylin.moe/categories/web%E5%AE%89%E5%85%A8/</loc>
-    <lastmod>2022-08-09T14:01:02+08:00</lastmod>
+    <loc>https://kylin.moe/p/cors%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90%E5%85%B1%E4%BA%AB%E6%BC%8F%E6%B4%9E/</loc>
+    <lastmod>2022-08-10T17:16:45+08:00</lastmod>
   </url><url>
-    <loc>https://kylin.moe/p/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</loc>
-    <lastmod>2022-08-09T14:01:02+08:00</lastmod>
+    <loc>https://kylin.moe/post/</loc>
+    <lastmod>2022-08-10T17:16:45+08:00</lastmod>
+  </url><url>
+    <loc>https://kylin.moe/tags/</loc>
+    <lastmod>2022-08-10T17:16:45+08:00</lastmod>
   </url><url>
     <loc>https://kylin.moe/page/</loc>
     <lastmod>2022-08-09T00:00:00+00:00</lastmod>
@@ -41,7 +23,17 @@
     <loc>https://kylin.moe/archives/</loc>
     <lastmod>2022-08-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://kylin.moe/%E9%93%BE%E6%8E%A5/</loc>
+    <loc>https://kylin.moe/_categories/</loc>
+  </url><url>
+    <loc>https://kylin.moe/categories/</loc>
+  </url><url>
+    <loc>https://kylin.moe/_categories/web%E5%AE%89%E5%85%A8/</loc>
+  </url><url>
+    <loc>https://kylin.moe/_categories/%E7%AE%80%E5%8D%95%E8%AE%B0/</loc>
+  </url><url>
+    <loc>https://kylin.moe/about/</loc>
+  </url><url>
+    <loc>https://kylin.moe/links/</loc>
   </url><url>
     <loc>https://kylin.moe/search/</loc>
   </url>

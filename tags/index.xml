@@ -1,31 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Tags on 灯塔</title>
+        <title>Tags on LightSec</title>
         <link>https://kylin.moe/tags/</link>
-        <description>Recent content in Tags on 灯塔</description>
+        <description>Recent content in Tags on LightSec</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh</language>
-        <lastBuildDate>Wed, 10 Aug 2022 16:22:29 +0800</lastBuildDate><atom:link href="https://kylin.moe/tags/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>docker</title>
-        <link>https://kylin.moe/tags/docker/</link>
-        <pubDate>Wed, 10 Aug 2022 16:22:29 +0800</pubDate>
-        
-        <guid>https://kylin.moe/tags/docker/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>docker-compose</title>
-        <link>https://kylin.moe/tags/docker-compose/</link>
-        <pubDate>Wed, 10 Aug 2022 16:22:29 +0800</pubDate>
-        
-        <guid>https://kylin.moe/tags/docker-compose/</guid>
-        <description></description>
-        </item>
-        <item>
+        <lastBuildDate>Wed, 10 Aug 2022 17:16:45 +0800</lastBuildDate><atom:link href="https://kylin.moe/tags/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>CORS</title>
         <link>https://kylin.moe/tags/cors/</link>
-        <pubDate>Tue, 09 Aug 2022 14:01:02 +0800</pubDate>
+        <pubDate>Wed, 10 Aug 2022 17:16:45 +0800</pubDate>
         
         <guid>https://kylin.moe/tags/cors/</guid>
         <description></description>

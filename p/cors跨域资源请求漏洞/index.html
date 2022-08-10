@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='在 xray 被动扫描的时候无意间看到了 baseline/cors/reflected，因为是未接触过的东西 简单总结一下，虽然到了最后换来了个 风险过低已忽略就是了
+漏洞介绍 首先明白几个概念 Origin（源）、SOP（同源策略） 和 CROS（跨域资源访问） 分别是什么
+Origin
+三个要素构成了Origin，分别是
+访问 Web 内容时的协议（http://） 域名（example.com） 端口（:80） 三者统称为源 Origin详解
+SOP
+同源策略（Same Origin Policy），同源策略是基于浏览器的安全策略，它限制了网站之间不能随意互相读取和访问对方的资源。只有请求源（本地）和目标源（服务器）相同时，才能对相应资源进行读取。 同源策略详解
+CORS
+跨域资源共享（Cross-Origin Resource Sharing）随着发展，业务不满足于内部的资源访问，于是便有了CORS（跨域资源共享）机制，开发者可以配置具体允许哪些源对服务器的资源进行访问，但是如果未进行配置，用户只要在请求标头 Origin 字段中加入允许访问的地址，那么就可以构建任意的可允许访问的源（Access-Control-Allow-Origin）
+通常 Access-Control-Allow-Origin 字段会在服务器的响应数据包内 请求标头Origin详解
+同源与不同源的例子
+假设服务器地址为 http://example.com
+几个同源的例子
+1 2 3 http://example.com http://example.com/1.php http://example.com/2.php 不同源的例子
+1 2 3 http://example.com https://example.com http://example.com:8080 漏洞是如何产生的
+上文提到了 请求标头 Origin 是可以构建的，假设服务器没有对字段做严格的限制，那么我们可以构造任意字段，让服务器的资源可提供给任意的第三方服务器。
+那么服务器同时满足下面三点要求，则可能构成CORS漏洞
+1 2 3 开启了 CORS（跨域资源共享） 未对Origin（请求标头）的内容做限制 未限制 Access-Control-Allow-Origin（允许访问的源） 字段 靶场漏洞复现 这里使用 DoraBox靶场: https://github.'><title>CORS跨域资源请求漏洞</title>
+
+<link rel='canonical' href='https://kylin.moe/p/cors%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90%E8%AF%B7%E6%B1%82%E6%BC%8F%E6%B4%9E/'>
+
+<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='CORS跨域资源请求漏洞'>
+<meta property='og:description' content='在 xray 被动扫描的时候无意间看到了 baseline/cors/reflected，因为是未接触过的东西 简单总结一下，虽然到了最后换来了个 风险过低已忽略就是了
+漏洞介绍 首先明白几个概念 Origin（源）、SOP（同源策略） 和 CROS（跨域资源访问） 分别是什么
+Origin
+三个要素构成了Origin，分别是
+访问 Web 内容时的协议（http://） 域名（example.com） 端口（:80） 三者统称为源 Origin详解
+SOP
+同源策略（Same Origin Policy），同源策略是基于浏览器的安全策略，它限制了网站之间不能随意互相读取和访问对方的资源。只有请求源（本地）和目标源（服务器）相同时，才能对相应资源进行读取。 同源策略详解
+CORS
+跨域资源共享（Cross-Origin Resource Sharing）随着发展，业务不满足于内部的资源访问，于是便有了CORS（跨域资源共享）机制，开发者可以配置具体允许哪些源对服务器的资源进行访问，但是如果未进行配置，用户只要在请求标头 Origin 字段中加入允许访问的地址，那么就可以构建任意的可允许访问的源（Access-Control-Allow-Origin）
+通常 Access-Control-Allow-Origin 字段会在服务器的响应数据包内 请求标头Origin详解
+同源与不同源的例子
+假设服务器地址为 http://example.com
+几个同源的例子
+1 2 3 http://example.com http://example.com/1.php http://example.com/2.php 不同源的例子
+1 2 3 http://example.com https://example.com http://example.com:8080 漏洞是如何产生的
+上文提到了 请求标头 Origin 是可以构建的，假设服务器没有对字段做严格的限制，那么我们可以构造任意字段，让服务器的资源可提供给任意的第三方服务器。
+那么服务器同时满足下面三点要求，则可能构成CORS漏洞
+1 2 3 开启了 CORS（跨域资源共享） 未对Origin（请求标头）的内容做限制 未限制 Access-Control-Allow-Origin（允许访问的源） 字段 靶场漏洞复现 这里使用 DoraBox靶场: https://github.'>
+<meta property='og:url' content='https://kylin.moe/p/cors%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90%E8%AF%B7%E6%B1%82%E6%BC%8F%E6%B4%9E/'>
+<meta property='og:site_name' content='kylinsec'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Web安全' /><meta property='article:tag' content='CORS' /><meta property='article:published_time' content='2022-08-10T17:16:45&#43;08:00'/><meta property='article:modified_time' content='2022-08-10T17:16:45&#43;08:00'/>
+<meta name="twitter:title" content="CORS跨域资源请求漏洞">
+<meta name="twitter:description" content="在 xray 被动扫描的时候无意间看到了 baseline/cors/reflected，因为是未接触过的东西 简单总结一下，虽然到了最后换来了个 风险过低已忽略就是了
+漏洞介绍 首先明白几个概念 Origin（源）、SOP（同源策略） 和 CROS（跨域资源访问） 分别是什么
+Origin
+三个要素构成了Origin，分别是
+访问 Web 内容时的协议（http://） 域名（example.com） 端口（:80） 三者统称为源 Origin详解
+SOP
+同源策略（Same Origin Policy），同源策略是基于浏览器的安全策略，它限制了网站之间不能随意互相读取和访问对方的资源。只有请求源（本地）和目标源（服务器）相同时，才能对相应资源进行读取。 同源策略详解
+CORS
+跨域资源共享（Cross-Origin Resource Sharing）随着发展，业务不满足于内部的资源访问，于是便有了CORS（跨域资源共享）机制，开发者可以配置具体允许哪些源对服务器的资源进行访问，但是如果未进行配置，用户只要在请求标头 Origin 字段中加入允许访问的地址，那么就可以构建任意的可允许访问的源（Access-Control-Allow-Origin）
+通常 Access-Control-Allow-Origin 字段会在服务器的响应数据包内 请求标头Origin详解
+同源与不同源的例子
+假设服务器地址为 http://example.com
+几个同源的例子
+1 2 3 http://example.com http://example.com/1.php http://example.com/2.php 不同源的例子
+1 2 3 http://example.com https://example.com http://example.com:8080 漏洞是如何产生的
+上文提到了 请求标头 Origin 是可以构建的，假设服务器没有对字段做严格的限制，那么我们可以构造任意字段，让服务器的资源可提供给任意的第三方服务器。
+那么服务器同时满足下面三点要求，则可能构成CORS漏洞
+1 2 3 开启了 CORS（跨域资源共享） 未对Origin（请求标头）的内容做限制 未限制 Access-Control-Allow-Origin（允许访问的源） 字段 靶场漏洞复现 这里使用 DoraBox靶场: https://github.">
+    <link rel="shortcut icon" href="https://www.bilibili.com/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hucf0891fb607ba1786189e7722321c328_82097_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🐟</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">kylinsec</a></h1>
+            <h2 class="site-description">网络安全爱好者</h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>首页</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/web%E5%AE%89%E5%85%A8/" >
+                Web安全
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/cors%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90%E8%AF%B7%E6%B1%82%E6%BC%8F%E6%B4%9E/">CORS跨域资源请求漏洞</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 10, 2022</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>在 xray 被动扫描的时候无意间看到了 <code>baseline/cors/reflected</code>，因为是未接触过的东西 简单总结一下，虽然到了最后换来了个 风险过低已忽略就是了</p>
+<p><img src="https://kylinsec-1259486734.cos.ap-shanghai.myqcloud.com/picgo/20220810172026.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h2 id="漏洞介绍">漏洞介绍</h2>
+<p>首先明白几个概念 Origin（源）、SOP（同源策略） 和 CROS（跨域资源访问） 分别是什么</p>
+<p><strong>Origin</strong></p>
+<p>三个要素构成了Origin，分别是</p>
+<ul>
+<li>访问 Web 内容时的协议（http://）</li>
+<li>域名（example.com）</li>
+<li>端口（:80）</li>
+</ul>
+<p>三者统称为源  <a class="link" href="https://developer.mozilla.org/zh-CN/docs/Glossary/Origin"  target="_blank" rel="noopener"
+    >Origin详解</a></p>
+<p><strong>SOP</strong></p>
+<p>同源策略（Same Origin Policy），同源策略是基于浏览器的安全策略，它限制了网站之间不能随意互相读取和访问对方的资源。只有请求源（本地）和目标源（服务器）相同时，才能对相应资源进行读取。 <a class="link" href="https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy"  target="_blank" rel="noopener"
+    >同源策略详解</a></p>
+<p><strong>CORS</strong></p>
+<p>跨域资源共享（Cross-Origin Resource Sharing）随着发展，业务不满足于内部的资源访问，于是便有了CORS（跨域资源共享）机制，开发者可以配置具体允许哪些源对服务器的资源进行访问，但是如果未进行配置，用户只要在请求标头 Origin 字段中加入允许访问的地址，那么就可以构建任意的可允许访问的源（Access-Control-Allow-Origin）</p>
+<p>通常 Access-Control-Allow-Origin 字段会在服务器的响应数据包内 <a class="link" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Origin"  target="_blank" rel="noopener"
+    >请求标头Origin详解</a></p>
+<p><strong>同源与不同源的例子</strong></p>
+<p>假设服务器地址为 <code>http://example.com</code></p>
+<p>几个同源的例子</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://example.com
+</span></span><span class="line"><span class="cl">http://example.com/1.php
+</span></span><span class="line"><span class="cl">http://example.com/2.php
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>不同源的例子</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://example.com
+</span></span><span class="line"><span class="cl">https://example.com
+</span></span><span class="line"><span class="cl">http://example.com:8080
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>漏洞是如何产生的</strong></p>
+<p>上文提到了 请求标头 Origin 是可以构建的，假设服务器没有对字段做严格的限制，那么我们可以构造任意字段，让服务器的资源可提供给任意的第三方服务器。</p>
+<p>那么服务器同时满足下面三点要求，则可能构成CORS漏洞</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">开启了 CORS（跨域资源共享）
+</span></span><span class="line"><span class="cl">未对Origin（请求标头）的内容做限制
+</span></span><span class="line"><span class="cl">未限制 Access-Control-Allow-Origin（允许访问的源） 字段
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="靶场漏洞复现">靶场漏洞复现</h2>
+<p>这里使用 DoraBox靶场: <a class="link" href="https://github.com/0verSp4ce/DoraBox"  target="_blank" rel="noopener"
+    >https://github.com/0verSp4ce/DoraBox</a></p>
+<p>本地搭建环境，访问 URL <code>http://localhost/DoraBox/csrf/userinfo.php</code></p>
+<p>拦截数据包分析响应包内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+</span></span><span class="line"><span class="cl"><span class="n">Server</span><span class="o">:</span> <span class="l">nginx/1.18.0</span>
+</span></span><span class="line"><span class="cl"><span class="n">Date</span><span class="o">:</span> <span class="l">Fri, 05 Aug 2022 20:35:19 GMT</span>
+</span></span><span class="line"><span class="cl"><span class="n">Content-Type</span><span class="o">:</span> <span class="l">text/html; charset=UTF-8</span>
+</span></span><span class="line"><span class="cl"><span class="n">Connection</span><span class="o">:</span> <span class="l">close</span>
+</span></span><span class="line"><span class="cl"><span class="n">X-Powered-By</span><span class="o">:</span> <span class="l">PHP/7.4.6</span>
+</span></span><span class="line"><span class="cl"><span class="n">Access-Control-Allow-Origin</span><span class="o">:</span> <span class="l">*</span>
+</span></span><span class="line"><span class="cl"><span class="n">Access-Control-Allow-Headers</span><span class="o">:</span> <span class="l">X-Requested-With</span>
+</span></span><span class="line"><span class="cl"><span class="n">Access-Control-Allow-Credentials</span><span class="o">:</span> <span class="l">true</span>
+</span></span><span class="line"><span class="cl"><span class="n">Access-Control-Allow-Methods</span><span class="o">:</span> <span class="l">PUT,POST,GET,DELETE,OPTIONS</span>
+</span></span><span class="line"><span class="cl"><span class="n">Content-Length</span><span class="o">:</span> <span class="l">151</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">{&#34;username&#34;:&#34;Vulkey_Chen&#34;,&#34;mobilephone&#34;:&#34;13188888888&#34;,&#34;email&#34;:&#34;admin@gh0st.cn&#34;,&#34;address&#34;:&#34;\u4e2d\u534e\u4eba\u6c11\u5171\u548c\u56fd&#34;,&#34;sex&#34;:&#34;Cool Man&#34;}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>Access-Control-Allow-Origin:*</code> 允许所有域都具有访问资源的权限。</p>
+<p><code>Access-Control-Allow-Credentials: true</code> 允许将请求的响应内容暴露给前端的JavaScript代码</p>
+<p><code>Access-Control-Allow-Methods: PUT,POST,GET,DELETE,OPTIONS</code> 允许跨域访问资源的请求方式</p>
+<p>服务端响应包内声明了，1. 任何域都可以访问资源 2. 允许将相应内容通过 JavasScript 代码获取 3. 允许多种方式，如PUT,POST,GET 方式请求服务器资源，那我们我们可以构建 POC 请求服务器资源</p>
+<p>这里的 POC 在靶场 <code>DoraBox/PoC/csrf/CORS/index.html</code> 目录内有现成的，直接套用</p>
+<p>在本地构建 <code>report.html</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>cors exp<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text/javascript&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">function</span> <span class="nx">cors</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">xhttp</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">xhttp</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">			<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;demo&#34;</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">responseText</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">};</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">xhttp</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&#34;GET&#34;</span><span class="p">,</span> <span class="s2">&#34;http://localhost/DoraBox/csrf/userinfo.php&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">xhttp</span><span class="p">.</span><span class="nx">withCredentials</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">xhttp</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">cors</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>report.html</code> 通过 javascript 代码请求服务器资源，并且服务器返回了响应的资源，在存在 CORS 漏洞的前提下，可以通过 CORS 来访问服务器未授权的接口、或是一些用户的敏感信息。</p>
+<p>使用浏览器打开页面 <code>report.html</code></p>
+<p>请求包</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="nf">GET</span> <span class="nn">/DoraBox/csrf/userinfo.php</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Host</span><span class="o">:</span> <span class="l">localhost</span>
+</span></span><span class="line"><span class="cl"><span class="n">User-Agent</span><span class="o">:</span> <span class="l">Mozilla/5.0</span>
+</span></span><span class="line"><span class="cl"><span class="n">Accept</span><span class="o">:</span> <span class="l">*/*</span>
+</span></span><span class="line"><span class="cl"><span class="n">Accept-Language</span><span class="o">:</span> <span class="l">zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span>
+</span></span><span class="line"><span class="cl"><span class="n">Accept-Encoding</span><span class="o">:</span> <span class="l">gzip, deflate</span>
+</span></span><span class="line"><span class="cl"><span class="n">Origin</span><span class="o">:</span> <span class="l">null</span>
+</span></span><span class="line"><span class="cl"><span class="n">Connection</span><span class="o">:</span> <span class="l">close</span>
+</span></span><span class="line"><span class="cl"><span class="n">Sec-Fetch-Dest</span><span class="o">:</span> <span class="l">empty</span>
+</span></span><span class="line"><span class="cl"><span class="n">Sec-Fetch-Mode</span><span class="o">:</span> <span class="l">cors</span>
+</span></span><span class="line"><span class="cl"><span class="n">Sec-Fetch-Site</span><span class="o">:</span> <span class="l">cross-site</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>响应包</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+</span></span><span class="line"><span class="cl"><span class="n">Server</span><span class="o">:</span> <span class="l">nginx/1.18.0</span>
+</span></span><span class="line"><span class="cl"><span class="n">Date</span><span class="o">:</span> <span class="l">Fri, 05 Aug 2022 20:43:19 GMT</span>
+</span></span><span class="line"><span class="cl"><span class="n">Content-Type</span><span class="o">:</span> <span class="l">text/html; charset=UTF-8</span>
+</span></span><span class="line"><span class="cl"><span class="n">Connection</span><span class="o">:</span> <span class="l">close</span>
+</span></span><span class="line"><span class="cl"><span class="n">X-Powered-By</span><span class="o">:</span> <span class="l">PHP/7.4.6</span>
+</span></span><span class="line"><span class="cl"><span class="n">Access-Control-Allow-Origin</span><span class="o">:</span> <span class="l">null</span>
+</span></span><span class="line"><span class="cl"><span class="n">Access-Control-Allow-Headers</span><span class="o">:</span> <span class="l">X-Requested-With</span>
+</span></span><span class="line"><span class="cl"><span class="n">Access-Control-Allow-Credentials</span><span class="o">:</span> <span class="l">true</span>
+</span></span><span class="line"><span class="cl"><span class="n">Access-Control-Allow-Methods</span><span class="o">:</span> <span class="l">PUT,POST,GET,DELETE,OPTIONS</span>
+</span></span><span class="line"><span class="cl"><span class="n">Content-Length</span><span class="o">:</span> <span class="l">151</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">{&#34;username&#34;:&#34;Vulkey_Chen&#34;,&#34;mobilephone&#34;:&#34;13188888888&#34;,&#34;email&#34;:&#34;admin@gh0st.cn&#34;,&#34;address&#34;:&#34;\u4e2d\u534e\u4eba\u6c11\u5171\u548c\u56fd&#34;,&#34;sex&#34;:&#34;Cool Man&#34;}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>梳理一下整个流程，此时存在 网站A 和网站B，以及用户A。网站A是业务站点，网站B是我们搭建的恶意请求资源站点。</p>
+<ol>
+<li>用户A在网站A登录了自己的账号，网站A返回了相应的用户信息</li>
+<li>用户A访问了网站B，网站B通过用户A向网站A发起请求，此时网站A返回相应内容，因为没有对跨域资源访问做限制，网站B也能获取到网站A的响应内容</li>
+</ol>
+<p>因为未对跨域请求做限制而导致第三方站点可以请求服务器资源，并不是绝对存在安全隐患的。假如说一个设计用户隐私的页面，页面会返回敏感信息的时候，这时候假设用户访问了恶意站点，恶意站点又针对敏感信息做了资源请求，可能就会导致用户的信息泄露。</p>
+<p>针对CORS漏洞的挖掘有一些小 tips，也简单的提一下</p>
+<p><strong>利用burpsuite，设置访问头带Origin请求，过滤响应包的内容</strong></p>
+<p>BurpSuite 配置 Proxy - Options - Match and Replace 勾选 <code>Request header Origin: foo.example.org</code></p>
+<p>历史数据包中过滤规则包含 <code>Access-Control-Allow-Origin: foo.example.org</code> 也就是筛选允许跨域资源请求的站点，针对这些站点返回的信息，单个的进行手工检测。</p>
+<h2 id="修复方案">修复方案</h2>
+<ul>
+<li>严格限制 Origin 字段的内容</li>
+<li>配置 Access-Control-Allow-Origin 可访问的源</li>
+<li>避免 Access-Control-Allow-Origin: null</li>
+<li>信任形式建议配置为 <code>*.example.com</code> 或 <code>.example.com</code></li>
+<li>减少 Access-Control-Allow-Methods 允许的请求方式</li>
+</ul>
+<h2 id="参考文献">参考文献</h2>
+<ul>
+<li><a class="link" href="https://www.cnblogs.com/Xy--1/p/13069099.html"  target="_blank" rel="noopener"
+    >CORS跨域漏洞学习 - Lushun</a></li>
+<li><a class="link" href="https://www.freebuf.com/column/194652.html"  target="_blank" rel="noopener"
+    >CORS跨域漏洞的学习 - FreeBuf网络安全行业门户</a></li>
+<li><a class="link" href="https://developer.mozilla.org/zh-CN/docs/Glossary/CORS"  target="_blank" rel="noopener"
+    >CORS - 术语表 | MDN (mozilla.org)</a></li>
+</ul>
+<p>文章是自己整理出来的，因为是一个新的知识点，设计到的东西太多了，不可能没有任何瑕疵和纰漏，希望能帮到你。如果有任何疑问，可以给我留言。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/web%E5%AE%89%E5%85%A8/">Web安全</a>
+        
+            <a href="/tags/cors/">CORS</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    
+
+    
+    
+    <section class="powerby" style="font-size: 13px;text-align: center;">
+
+        Powerby
+        <a href="https://gohugo.io/" target="_blank"><span style="text-decoration:underline">Hugo</span></a>
+        Theme
+        <a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank"><span style="text-decoration:underline">stack</span></a>
+
+    </section>
+
+    
+    <section class="powerby" style="font-size: 13px;text-align: center;">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <span id="busuanzi_container_site_pv">总访问量 <span id="busuanzi_value_site_pv"></span> 次</span>
+        <span id="busuanzi_container_site_pv">总访客数 <span id="busuanzi_value_site_uv"></span> 人</span>
+    </section>
+
+    
+
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#漏洞介绍">漏洞介绍</a></li>
+    <li><a href="#靶场漏洞复现">靶场漏洞复现</a></li>
+    <li><a href="#修复方案">修复方案</a></li>
+    <li><a href="#参考文献">参考文献</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

@@ -1,199 +1,92 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Posts on 灯塔</title>
+        <title>Posts on LightSec</title>
         <link>https://kylin.moe/post/</link>
-        <description>Recent content in Posts on 灯塔</description>
+        <description>Recent content in Posts on LightSec</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh</language>
-        <lastBuildDate>Wed, 10 Aug 2022 16:22:29 +0800</lastBuildDate><atom:link href="https://kylin.moe/post/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>简单记录一下docker相关命令</title>
-        <link>https://kylin.moe/p/%E7%AE%80%E5%8D%95%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%8Bdocker%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4/</link>
-        <pubDate>Wed, 10 Aug 2022 16:22:29 +0800</pubDate>
+        <lastBuildDate>Wed, 10 Aug 2022 17:16:45 +0800</lastBuildDate><atom:link href="https://kylin.moe/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>CORS跨域资源共享漏洞</title>
+        <link>https://kylin.moe/p/cors%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90%E5%85%B1%E4%BA%AB%E6%BC%8F%E6%B4%9E/</link>
+        <pubDate>Wed, 10 Aug 2022 17:16:45 +0800</pubDate>
         
-        <guid>https://kylin.moe/p/%E7%AE%80%E5%8D%95%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%8Bdocker%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4/</guid>
-        <description>&lt;h1 id=&#34;docker&#34;&gt;docker&lt;/h1&gt;
-&lt;p&gt;容器 Docker 把代码及其所有依赖打包的一个标准单元，可以把一个程序从一个环境快速可靠的移植到另一个环境上运行。Docker 镜像是一个完整的、可靠的、独立的软件包，其中包含了运行程序所需要的一切。&lt;/p&gt;
-&lt;h2 id=&#34;下载安装&#34;&gt;下载安装&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.docker.com/get-started/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;官网下载&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://hub.docker.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;查找镜像&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;基本概念&#34;&gt;基本概念&lt;/h2&gt;
-&lt;p&gt;Docker 的运行需要&lt;code&gt;容器&lt;/code&gt;和&lt;code&gt;镜像&lt;/code&gt;，镜像需要人来打包制作，容器在 Docker 运行镜像时会自动生成。或者我们可以手动生成容器，并使用参数来指定容器的名称、使用端口等信息。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;容器和镜像的区别&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;镜像只能运行在底层内核上，通常只能用作一次性使用，不能保存保留任何数据。使用命令 &lt;code&gt;docker run [镜像名]&lt;/code&gt; 的时候 docker 会自动生成一个容器，我们使用 &lt;code&gt;docker exec&lt;/code&gt; 进入的通常都是容器而不是镜像。&lt;/p&gt;
-&lt;p&gt;安装完成后使用 &lt;code&gt;docker version&lt;/code&gt; 或 &lt;code&gt;docker info&lt;/code&gt; 查看docker版本&lt;/p&gt;
-&lt;h2 id=&#34;基础命令&#34;&gt;基础命令&lt;/h2&gt;
-&lt;p&gt;通常使用docker的步骤包括但不限于&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;查找镜像&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;下载镜像&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;运行镜像 - 创建容器&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;进入容器&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;停止容器&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;启动容器&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;删除容器&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;删除镜像&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;本章将按照步骤介绍常用命令以及所对应含义&lt;/p&gt;
-&lt;p&gt;在此之前需要先掌握几条基本命令&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;查看本地镜像：&lt;code&gt;docker images&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;查看本地所有容器 &lt;code&gt;docker ps -a&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;查看正在运行中的容器 &lt;code&gt;docker ps&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;因为镜像没有运行这一说，所以使用 &lt;code&gt;docker ps&lt;/code&gt; 命令实际上查看的是正在运行中的容器。&lt;/p&gt;
-&lt;h3 id=&#34;1-查找镜像&#34;&gt;1. 查找镜像&lt;/h3&gt;
-&lt;p&gt;1-1 命令行查找远程镜像&lt;/p&gt;
-&lt;p&gt;搜索镜像：&lt;code&gt;docker search 名称&lt;/code&gt;
-查看镜像 &lt;code&gt;curl https://registry.hub.docker.com/v1/repositories/镜像名称/tags&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;tags 根据镜像而定或多或少，更好的方式是通过网页点击查看历史 tags&lt;/p&gt;
-&lt;p&gt;1-2 Docker Hub 网页查找镜像&lt;/p&gt;
-&lt;p&gt;通过 &lt;a class=&#34;link&#34; href=&#34;https://hub.docker.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Docker Hub&lt;/a&gt; 查找需要的镜像，找到 tags 标签&lt;/p&gt;
-&lt;h3 id=&#34;2-下载镜像&#34;&gt;2. 下载镜像&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;docker pull [REPOSITORY[:TAG]]&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;完整 TAG 可以通过不同方式获取，在页面上可以通过 Docker Pull Command 提供的命令进行下载&lt;/p&gt;
-&lt;h3 id=&#34;3-运行镜像&#34;&gt;3. 运行镜像&lt;/h3&gt;
-&lt;p&gt;在运行镜像时 docker 会自动生成一个提供访问和服务的容器并运行，我们可以通过参数指定这个容器的部分参数&lt;/p&gt;
-&lt;p&gt;通过 &lt;code&gt;docker images&lt;/code&gt; 可以查看镜像对应的ID&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;docker run 镜像ID&lt;/code&gt; 可以通过镜像创建并且运行容器&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker run [options] 镜像ID
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;options:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	--name 指定容器名称
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	-p  指定容器提供服务的端口
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	-i  创建交互式
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	-d  后台运行容器
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;使用 &lt;code&gt;docker ps&lt;/code&gt; 可以查看所有正在运行中的容器&lt;/p&gt;
-&lt;h3 id=&#34;4-进入容器&#34;&gt;4. 进入容器&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;docker exec -it 容器ID或名称 /bin/bash&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;可以通过容器ID或通过创建容器时指定的名称进入，如果没有指定名称那么则由 docker 随机生成&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;/bin/bash&lt;/code&gt; 则是指定进入容器所使用的 shell，可以更换为 &lt;code&gt;/bin/sh&lt;/code&gt; 或是 &lt;code&gt;/bin/zsh&lt;/code&gt; 等&lt;/p&gt;
-&lt;h3 id=&#34;5-停止容器&#34;&gt;5. 停止容器&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;docker stop [容器ID 或 容器名]&lt;/code&gt;&lt;/p&gt;
-&lt;h3 id=&#34;6-启动容器&#34;&gt;6. 启动容器&lt;/h3&gt;
-&lt;p&gt;启动指定容器 &lt;code&gt;docker start [容器ID 或 容器名]&lt;/code&gt;&lt;/p&gt;
-&lt;h3 id=&#34;6-删除容器&#34;&gt;6. 删除容器&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;docker rm [容器ID 或 容器名]&lt;/code&gt;&lt;/p&gt;
-&lt;h3 id=&#34;7-删除镜像&#34;&gt;7. 删除镜像&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;docker rmi [OPTIONS] [镜像ID]&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Options:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  -f, --force      强制删除镜像
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      --no-prune   不删除没有附带标签的父级镜像
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;拓展用法&#34;&gt;拓展用法&lt;/h2&gt;
-&lt;h3 id=&#34;导出镜像&#34;&gt;导出镜像&lt;/h3&gt;
-&lt;p&gt;将容器导出为 tar 压缩包 &lt;code&gt;docker export [容器ID 或 容器名] &amp;gt; [名称].tar&lt;/code&gt;&lt;/p&gt;
-&lt;h3 id=&#34;导入镜像&#34;&gt;导入镜像&lt;/h3&gt;
-&lt;p&gt;将快照导入到镜像 &lt;code&gt;cat [名称].tar | docker import - [容器名]&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;通过 URL 导入容器 &lt;code&gt;docker import http://example.com/exampleimage.tgz&lt;/code&gt;&lt;/p&gt;
-&lt;h3 id=&#34;网络端口&#34;&gt;网络端口&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;docker ps&lt;/code&gt; 可以查看容器的端口映射，&lt;code&gt;docker port&lt;/code&gt; 可以查看指定（ID或容器名）容器的端口映射具体情况&lt;/p&gt;
-&lt;p&gt;查看端口映射情况 &lt;code&gt;docker port [容器ID 或 容器名]&lt;/code&gt;&lt;/p&gt;
-&lt;h3 id=&#34;容器状态&#34;&gt;容器状态&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;查看容器内的标准输出&lt;/strong&gt; &lt;code&gt;docker logs [容器ID 或 容器名]&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;查看容器内部日志 &lt;code&gt;docker logs -f [容器ID 或 容器名]&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;查看容器内部运行的程序 &lt;code&gt;docker top [容器ID 或 容器名]&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;使用 &lt;code&gt;docker inspect [容器ID 或 容器名]&lt;/code&gt; 来查看 docker 的底层信息。它会返回一个记录着 docker 容器配置和状态信息的 JSON 格式文件。&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>测试文章</title>
-        <link>https://kylin.moe/p/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</link>
-        <pubDate>Tue, 09 Aug 2022 14:01:02 +0800</pubDate>
-        
-        <guid>https://kylin.moe/p/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</guid>
-        <description>&lt;h2 id=&#34;漏洞介绍&#34;&gt;漏洞介绍&lt;/h2&gt;
+        <guid>https://kylin.moe/p/cors%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90%E5%85%B1%E4%BA%AB%E6%BC%8F%E6%B4%9E/</guid>
+        <description>&lt;img src="https://img-blog.csdnimg.cn/img_convert/a09ad76b3dfb19364fa79f034b0f2d85.png" alt="Featured image of post CORS跨域资源共享漏洞" /&gt;&lt;p&gt;在 xray 被动扫描的时候无意间看到了 &lt;code&gt;baseline/cors/reflected&lt;/code&gt;，因为是未接触过的东西 简单总结一下，虽然到了最后换来了个 风险过低已忽略就是了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://kylinsec-1259486734.cos.ap-shanghai.myqcloud.com/picgo/20220810172026.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;漏洞介绍&#34;&gt;漏洞介绍&lt;/h2&gt;
 &lt;p&gt;首先明白几个概念 Origin（源）、SOP（同源策略） 和 CROS（跨域资源访问） 分别是什么&lt;/p&gt;
-&lt;h3 id=&#34;origin源&#34;&gt;&lt;strong&gt;Origin（源）&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;访问 Web 内容时的协议（http://）、域名（example.com）和端口（:80）三者统称为源&lt;/p&gt;
-&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://developer.mozilla.org/zh-CN/docs/Glossary/Origin&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+&lt;p&gt;&lt;strong&gt;Origin&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;三个要素构成了Origin，分别是&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;访问 Web 内容时的协议（http://）&lt;/li&gt;
+&lt;li&gt;域名（example.com）&lt;/li&gt;
+&lt;li&gt;端口（:80）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;三者统称为源  &lt;a class=&#34;link&#34; href=&#34;https://developer.mozilla.org/zh-CN/docs/Glossary/Origin&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Origin详解&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&#34;sop同源策略same-origin-policy&#34;&gt;&lt;strong&gt;SOP（同源策略（Same Origin Policy））&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;同源策略是基于浏览器的安全策略，它限制了网站之间不能随意互相读取和访问对方的资源。只有请求源（本地）和目标源（服务器）相同时，才能对相应资源进行读取。&lt;/p&gt;
-&lt;p&gt;比方说黑客构建了一个站点，假如没有同源策略，你访问了这个恶意站点，那么黑客就可以获取到你访问页面的响应内容&lt;/p&gt;
-&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+&lt;p&gt;&lt;strong&gt;SOP&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;同源策略（Same Origin Policy），同源策略是基于浏览器的安全策略，它限制了网站之间不能随意互相读取和访问对方的资源。只有请求源（本地）和目标源（服务器）相同时，才能对相应资源进行读取。 &lt;a class=&#34;link&#34; href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;同源策略详解&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&#34;cors跨域资源共享cross-origin-resource-sharing&#34;&gt;&lt;strong&gt;CORS（跨域资源共享（Cross-Origin Resource Sharing））&lt;/strong&gt;&lt;/h3&gt;
-&lt;p&gt;随着发展，业务不满足于内部的资源访问，于是便有了CORS（跨域资源共享）机制，开发者可以配置具体允许哪些源对服务器的资源进行访问，但是如果未进行配置，用户只要在请求标头 Origin 字段中加入允许访问的地址，那么就可以构建任意的可允许访问的源（Access-Control-Allow-Origin）&lt;/p&gt;
-&lt;p&gt;通常 Access-Control-Allow-Origin 字段会在服务器的相应数据包内&lt;/p&gt;
-&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Origin&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+&lt;p&gt;&lt;strong&gt;CORS&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;跨域资源共享（Cross-Origin Resource Sharing）随着发展，业务不满足于内部的资源访问，于是便有了CORS（跨域资源共享）机制，开发者可以配置具体允许哪些源对服务器的资源进行访问，但是如果未进行配置，用户只要在请求标头 Origin 字段中加入允许访问的地址，那么就可以构建任意的可允许访问的源（Access-Control-Allow-Origin）&lt;/p&gt;
+&lt;p&gt;通常 Access-Control-Allow-Origin 字段会在服务器的响应数据包内 &lt;a class=&#34;link&#34; href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Origin&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;请求标头Origin详解&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;同源的例子&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;http://example.com&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;http://example.com&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;http://example.com/1.asp&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;http://example.com/1.asp&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;http://example.com/2.asp&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;http://example.com/2.asp&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;不同源的例子&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;http://example.com&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;http://example.com&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://example.com&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://example.com&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;http://example.com:8080&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;http://example.com:8080&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;漏洞的产生&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;同源与不同源的例子&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;假设服务器地址为 &lt;code&gt;http://example.com&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;几个同源的例子&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;http://example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;http://example.com/1.php
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;http://example.com/2.php
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;不同源的例子&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;http://example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;https://example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;http://example.com:8080
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;漏洞是如何产生的&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;上文提到了 请求标头 Origin 是可以构建的，假设服务器没有对字段做严格的限制，那么我们可以构造任意字段，让服务器的资源可提供给任意的第三方服务器。&lt;/p&gt;
 &lt;p&gt;那么服务器同时满足下面三点要求，则可能构成CORS漏洞&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;开启了 CORS（跨域资源共享）&lt;/li&gt;
-&lt;li&gt;未对Origin（请求标头）的内容做限制&lt;/li&gt;
-&lt;li&gt;未限制 Access-Control-Allow-Origin（允许访问的源） 字段&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;漏洞复现&#34;&gt;漏洞复现&lt;/h2&gt;
-&lt;p&gt;相关靶场资源&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;DoraBox靶场: &lt;a class=&#34;link&#34; href=&#34;https://github.com/0verSp4ce/DoraBox&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://github.com/0verSp4ce/DoraBox&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;开启了 CORS（跨域资源共享）
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;未对Origin（请求标头）的内容做限制
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;未限制 Access-Control-Allow-Origin（允许访问的源） 字段
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;靶场漏洞复现&#34;&gt;靶场漏洞复现&lt;/h2&gt;
+&lt;p&gt;这里使用 DoraBox靶场: &lt;a class=&#34;link&#34; href=&#34;https://github.com/0verSp4ce/DoraBox&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/0verSp4ce/DoraBox&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本地搭建环境，访问 URL &lt;code&gt;http://localhost/DoraBox/csrf/userinfo.php&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;响应包内容&lt;/p&gt;
+&lt;p&gt;拦截数据包分析响应包内容&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
@@ -226,10 +119,12 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{&amp;#34;username&amp;#34;:&amp;#34;Vulkey_Chen&amp;#34;,&amp;#34;mobilephone&amp;#34;:&amp;#34;13188888888&amp;#34;,&amp;#34;email&amp;#34;:&amp;#34;admin@gh0st.cn&amp;#34;,&amp;#34;address&amp;#34;:&amp;#34;\u4e2d\u534e\u4eba\u6c11\u5171\u548c\u56fd&amp;#34;,&amp;#34;sex&amp;#34;:&amp;#34;Cool Man&amp;#34;}
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;Access-Control-Allow-Origin:* 允许所有域都具有访问资源的权限。&lt;/p&gt;
-&lt;p&gt;Access-Control-Allow-Credentials: true 允许将请求的响应内容暴露给前端的JavaScript代码&lt;/p&gt;
-&lt;p&gt;Access-Control-Allow-Methods: PUT,POST,GET,DELETE,OPTIONS 允许跨域访问资源的请求方式&lt;/p&gt;
-&lt;p&gt;在本地构建 &lt;code&gt;cors.html&lt;/code&gt;&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;&lt;code&gt;Access-Control-Allow-Origin:*&lt;/code&gt; 允许所有域都具有访问资源的权限。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Access-Control-Allow-Credentials: true&lt;/code&gt; 允许将请求的响应内容暴露给前端的JavaScript代码&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Access-Control-Allow-Methods: PUT,POST,GET,DELETE,OPTIONS&lt;/code&gt; 允许跨域访问资源的请求方式&lt;/p&gt;
+&lt;p&gt;服务端响应包内声明了，1. 任何域都可以访问资源 2. 允许将相应内容通过 JavasScript 代码获取 3. 允许多种方式，如PUT,POST,GET 方式请求服务器资源，那我们我们可以构建 POC 请求服务器资源&lt;/p&gt;
+&lt;p&gt;这里的 POC 在靶场 &lt;code&gt;DoraBox/PoC/csrf/CORS/index.html&lt;/code&gt; 目录内有现成的，直接套用&lt;/p&gt;
+&lt;p&gt;在本地构建 &lt;code&gt;report.html&lt;/code&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
@@ -282,7 +177,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;html&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;使用浏览器打开本地文件 &lt;code&gt;report.html&lt;/code&gt;&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;&lt;code&gt;report.html&lt;/code&gt; 通过 javascript 代码请求服务器资源，并且服务器返回了响应的资源，在存在 CORS 漏洞的前提下，可以通过 CORS 来访问服务器未授权的接口、或是一些用户的敏感信息。&lt;/p&gt;
+&lt;p&gt;使用浏览器打开页面 &lt;code&gt;report.html&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;请求包&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -345,11 +241,16 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{&amp;#34;username&amp;#34;:&amp;#34;Vulkey_Chen&amp;#34;,&amp;#34;mobilephone&amp;#34;:&amp;#34;13188888888&amp;#34;,&amp;#34;email&amp;#34;:&amp;#34;admin@gh0st.cn&amp;#34;,&amp;#34;address&amp;#34;:&amp;#34;\u4e2d\u534e\u4eba\u6c11\u5171\u548c\u56fd&amp;#34;,&amp;#34;sex&amp;#34;:&amp;#34;Cool Man&amp;#34;}
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;code&gt;report.html&lt;/code&gt; 通过 javascript 代码请求服务器资源，并且服务器返回了响应的资源，在存在 CORS 漏洞的前提下，可以通过 CORS 来访问服务器未授权的接口、或是一些用户的敏感信息。&lt;/p&gt;
-&lt;h2 id=&#34;漏洞拓展&#34;&gt;漏洞拓展&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;批量的检测方式&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;../../%e5%ae%89%e5%85%a8%e5%b7%a5%e5%85%b7/BurpSuite.md&#34; &gt;Burpsuite&lt;/a&gt; 配置 Proxy - Options - Match and Replace 勾选 &lt;code&gt;Request header Origin: foo.example.org&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;历史数据包中过滤规则 &lt;code&gt;Access-Control-Allow-Origin: foo.example.org&lt;/code&gt;&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;梳理一下整个流程，此时存在 网站A 和网站B，以及用户A。网站A是业务站点，网站B是我们搭建的恶意请求资源站点。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;用户A在网站A登录了自己的账号，网站A返回了相应的用户信息&lt;/li&gt;
+&lt;li&gt;用户A访问了网站B，网站B通过用户A向网站A发起请求，此时网站A返回相应内容，因为没有对跨域资源访问做限制，网站B也能获取到网站A的响应内容&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;因为未对跨域请求做限制而导致第三方站点可以请求服务器资源，并不是绝对存在安全隐患的。假如说一个设计用户隐私的页面，页面会返回敏感信息的时候，这时候假设用户访问了恶意站点，恶意站点又针对敏感信息做了资源请求，可能就会导致用户的信息泄露。&lt;/p&gt;
+&lt;p&gt;针对CORS漏洞的挖掘有一些小 tips，也简单的提一下&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;利用burpsuite，设置访问头带Origin请求，过滤响应包的内容&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;BurpSuite 配置 Proxy - Options - Match and Replace 勾选 &lt;code&gt;Request header Origin: foo.example.org&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;历史数据包中过滤规则包含 &lt;code&gt;Access-Control-Allow-Origin: foo.example.org&lt;/code&gt; 也就是筛选允许跨域资源请求的站点，针对这些站点返回的信息，单个的进行手工检测。&lt;/p&gt;
 &lt;h2 id=&#34;修复方案&#34;&gt;修复方案&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;严格限制 Origin 字段的内容&lt;/li&gt;
@@ -367,6 +268,7 @@
 &lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://developer.mozilla.org/zh-CN/docs/Glossary/CORS&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;CORS - 术语表 | MDN (mozilla.org)&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;文章是自己整理出来的，因为是一个新的知识点，设计到的东西太多了，不可能没有任何瑕疵和纰漏，希望能帮到你。如果有任何疑问，欢迎给我留言。&lt;/p&gt;
 </description>
         </item>
         

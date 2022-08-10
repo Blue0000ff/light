@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Pages on 灯塔</title>
+        <title>Pages on LightSec</title>
         <link>https://kylin.moe/page/</link>
-        <description>Recent content in Pages on 灯塔</description>
+        <description>Recent content in Pages on LightSec</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh</language>
         <lastBuildDate>Tue, 09 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://kylin.moe/page/index.xml" rel="self" type="application/rss+xml" /><item>
@@ -15,11 +15,38 @@
         <description></description>
         </item>
         <item>
-        <title>链接</title>
-        <link>https://kylin.moe/%E9%93%BE%E6%8E%A5/</link>
+        <title>关于</title>
+        <link>https://kylin.moe/about/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://kylin.moe/%E9%93%BE%E6%8E%A5/</guid>
+        <guid>https://kylin.moe/about/</guid>
+        <description>&lt;p&gt;你是一个渗透测试工程师，你精通msf sqlmap burp cs等等各种渗透测试工具，你掌握 sql注入 xss csrf ssrf rce 反序列化各种漏洞，你多年寒窗自学终于踏入了安全圈这个大门，某一天你兴致冲冲的打开SRC导航寻找着你今天的目标，你选了一个看起来不像大厂的SRC开始挖洞，从早到凌晨你终于挖到了一个边缘业务的信息泄露，你兴致满满的写完报告提交，心想着这一个漏洞怎么说也要给一个高危，毕竟泄露了全站的用户数据。第二天你起床之后看到已忽略三个字映入你的眼帘原因是该业务已经停止运营，你心想，换一家挖吧。于是你又开始了和昨天一样的循环，又是一个凌晨，挖到了一个sql注入，你心想这波肯定能拿到奖金，第二天你又看到了熟悉的三个字，已忽略，原因是和其他人撞洞了，你心想，这个src应该挖的人很多，换一家挖吧。于是你又开始了和昨天一样的循环，又是一个凌晨，挖到了一个RCE，你心想这波绝对稳了，第二天你醒来看到已确认三个字，你似乎好久没看到这三个字了，你突然感觉付出是值得的，于是你激动的查看奖金发现为0，但积分却加了几百，你心里有点生气，但你想了一下积分可以换京东卡，于是你去积分商城看了一下兑换的奖品，发现自己的积分连一包卫龙辣条都换不了，你心想，这个src太坑了，换一家挖吧。于是你又开始了和昨天一样的循环，又是一个凌晨，挖到了一个SSRF+内网漫游+全站信息泄露+核心业务数据泄露组合拳利用，你心想，这次一定赚大了，看着你身边的iPhone 6手机以及开个虚拟机都卡的小电脑，打开了Apple官网，看着最新款的MacBook Pro。到了第二天，你看到已确认三个字，赶紧查看奖金，发现奖金只奖励了3000元，你有点疑惑，然后你用尽你在安全圈内部所有的人脉关系，你联系到了内部人员，原来是SRC的预算不够了。此时又看到了做抖音自媒体的朋友发布了一个新的作品，视频里面写着“我用过最干净的电脑就是我黑客师傅的电脑，安排！”你看着这低劣忽悠人的内容嗤笑了一声，然后又看到了你自媒体的朋友发的朋友圈，说做黑客科普短视频赚了盆满钵满，你又看了看你SRC平台的3000块钱。你摇摇欲坠的内心将要破防。然后你长舒一口气说，换一家挖吧。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;AboutLinks&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://space.bilibili.com/670041240&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;哔哩哔哩&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.yuque.com/kyl1n0&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;语雀&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/MoeKylin&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Github&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Project&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/MoeKylin/Security&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;S1curity&lt;/a&gt; 是一个由个人维护的安全知识库，包括但不限于 WriteUp、信息收集、渗透测试&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Timeaxis&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;2022-08-10 博客成立，命名为 刹那抓住了未来，部署在 Github&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>链接</title>
+        <link>https://kylin.moe/links/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://kylin.moe/links/</guid>
         <description>&lt;p&gt;To use this feature, add &lt;code&gt;links&lt;/code&gt; section to frontmatter.&lt;/p&gt;
 &lt;p&gt;This page&amp;rsquo;s frontmatter:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;

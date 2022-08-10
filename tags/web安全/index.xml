@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>LightSec</title>
-        <link>https://kylin.moe/</link>
-        <description>Recent content on LightSec</description>
+        <title>Web安全 on kylinsec</title>
+        <link>https://kylin.moe/tags/web%E5%AE%89%E5%85%A8/</link>
+        <description>Recent content in Web安全 on kylinsec</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh</language>
-        <lastBuildDate>Wed, 10 Aug 2022 17:16:45 +0800</lastBuildDate><atom:link href="https://kylin.moe/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>CORS跨域资源共享漏洞</title>
-        <link>https://kylin.moe/p/cors%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90%E5%85%B1%E4%BA%AB%E6%BC%8F%E6%B4%9E/</link>
+        <lastBuildDate>Wed, 10 Aug 2022 17:16:45 +0800</lastBuildDate><atom:link href="https://kylin.moe/tags/web%E5%AE%89%E5%85%A8/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>CORS跨域资源请求漏洞</title>
+        <link>https://kylin.moe/p/cors%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90%E8%AF%B7%E6%B1%82%E6%BC%8F%E6%B4%9E/</link>
         <pubDate>Wed, 10 Aug 2022 17:16:45 +0800</pubDate>
         
-        <guid>https://kylin.moe/p/cors%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90%E5%85%B1%E4%BA%AB%E6%BC%8F%E6%B4%9E/</guid>
-        <description>&lt;img src="https://img-blog.csdnimg.cn/img_convert/a09ad76b3dfb19364fa79f034b0f2d85.png" alt="Featured image of post CORS跨域资源共享漏洞" /&gt;&lt;p&gt;在 xray 被动扫描的时候无意间看到了 &lt;code&gt;baseline/cors/reflected&lt;/code&gt;，因为是未接触过的东西 简单总结一下，虽然到了最后换来了个 风险过低已忽略就是了&lt;/p&gt;
+        <guid>https://kylin.moe/p/cors%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90%E8%AF%B7%E6%B1%82%E6%BC%8F%E6%B4%9E/</guid>
+        <description>&lt;p&gt;在 xray 被动扫描的时候无意间看到了 &lt;code&gt;baseline/cors/reflected&lt;/code&gt;，因为是未接触过的东西 简单总结一下，虽然到了最后换来了个 风险过低已忽略就是了&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://kylinsec-1259486734.cos.ap-shanghai.myqcloud.com/picgo/20220810172026.png&#34;
 	
 	
@@ -268,86 +268,8 @@
 &lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://developer.mozilla.org/zh-CN/docs/Glossary/CORS&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;CORS - 术语表 | MDN (mozilla.org)&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;文章是自己整理出来的，因为是一个新的知识点，设计到的东西太多了，不可能没有任何瑕疵和纰漏，希望能帮到你。如果有任何疑问，欢迎给我留言。&lt;/p&gt;
+&lt;p&gt;文章是自己整理出来的，因为是一个新的知识点，设计到的东西太多了，不可能没有任何瑕疵和纰漏，希望能帮到你。如果有任何疑问，可以给我留言。&lt;/p&gt;
 </description>
-        </item>
-        <item>
-        <title>归档</title>
-        <link>https://kylin.moe/archives/</link>
-        <pubDate>Tue, 09 Aug 2022 00:00:00 +0000</pubDate>
-        
-        <guid>https://kylin.moe/archives/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>关于</title>
-        <link>https://kylin.moe/about/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://kylin.moe/about/</guid>
-        <description>&lt;p&gt;你是一个渗透测试工程师，你精通msf sqlmap burp cs等等各种渗透测试工具，你掌握 sql注入 xss csrf ssrf rce 反序列化各种漏洞，你多年寒窗自学终于踏入了安全圈这个大门，某一天你兴致冲冲的打开SRC导航寻找着你今天的目标，你选了一个看起来不像大厂的SRC开始挖洞，从早到凌晨你终于挖到了一个边缘业务的信息泄露，你兴致满满的写完报告提交，心想着这一个漏洞怎么说也要给一个高危，毕竟泄露了全站的用户数据。第二天你起床之后看到已忽略三个字映入你的眼帘原因是该业务已经停止运营，你心想，换一家挖吧。于是你又开始了和昨天一样的循环，又是一个凌晨，挖到了一个sql注入，你心想这波肯定能拿到奖金，第二天你又看到了熟悉的三个字，已忽略，原因是和其他人撞洞了，你心想，这个src应该挖的人很多，换一家挖吧。于是你又开始了和昨天一样的循环，又是一个凌晨，挖到了一个RCE，你心想这波绝对稳了，第二天你醒来看到已确认三个字，你似乎好久没看到这三个字了，你突然感觉付出是值得的，于是你激动的查看奖金发现为0，但积分却加了几百，你心里有点生气，但你想了一下积分可以换京东卡，于是你去积分商城看了一下兑换的奖品，发现自己的积分连一包卫龙辣条都换不了，你心想，这个src太坑了，换一家挖吧。于是你又开始了和昨天一样的循环，又是一个凌晨，挖到了一个SSRF+内网漫游+全站信息泄露+核心业务数据泄露组合拳利用，你心想，这次一定赚大了，看着你身边的iPhone 6手机以及开个虚拟机都卡的小电脑，打开了Apple官网，看着最新款的MacBook Pro。到了第二天，你看到已确认三个字，赶紧查看奖金，发现奖金只奖励了3000元，你有点疑惑，然后你用尽你在安全圈内部所有的人脉关系，你联系到了内部人员，原来是SRC的预算不够了。此时又看到了做抖音自媒体的朋友发布了一个新的作品，视频里面写着“我用过最干净的电脑就是我黑客师傅的电脑，安排！”你看着这低劣忽悠人的内容嗤笑了一声，然后又看到了你自媒体的朋友发的朋友圈，说做黑客科普短视频赚了盆满钵满，你又看了看你SRC平台的3000块钱。你摇摇欲坠的内心将要破防。然后你长舒一口气说，换一家挖吧。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;AboutLinks&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://space.bilibili.com/670041240&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;哔哩哔哩&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.yuque.com/kyl1n0&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;语雀&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/MoeKylin&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Github&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Project&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/MoeKylin/Security&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;S1curity&lt;/a&gt; 是一个由个人维护的安全知识库，包括但不限于 WriteUp、信息收集、渗透测试&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Timeaxis&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;2022-08-10 博客成立，命名为 刹那抓住了未来，部署在 Github&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        </item>
-        <item>
-        <title>链接</title>
-        <link>https://kylin.moe/links/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://kylin.moe/links/</guid>
-        <description>&lt;p&gt;To use this feature, add &lt;code&gt;links&lt;/code&gt; section to frontmatter.&lt;/p&gt;
-&lt;p&gt;This page&amp;rsquo;s frontmatter:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;links&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;- &lt;span class=&#34;nt&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;GitHub&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;description&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;GitHub is the world&amp;#39;s largest software development platform.&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;website&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;https://github.com&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;- &lt;span class=&#34;nt&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;TypeScript&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;description&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;website&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;https://www.typescriptlang.org&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;ts-logo-128.jpg&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;code&gt;image&lt;/code&gt; field accepts both local and external images.&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>搜索</title>
-        <link>https://kylin.moe/search/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://kylin.moe/search/</guid>
-        <description></description>
         </item>
         
     </channel>
