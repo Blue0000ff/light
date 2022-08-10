@@ -1,29 +1,20 @@
 <!DOCTYPE html>
 <html lang="zh" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='你是一个渗透测试工程师，你精通msf sqlmap burp cs等等各种渗透测试工具，你掌握 sql注入 xss csrf ssrf rce 反序列化各种漏洞，你多年寒窗自学终于踏入了安全圈这个大门，某一天你兴致冲冲的打开SRC导航寻找着你今天的目标，你选了一个看起来不像大厂的SRC开始挖洞，从早到凌晨你终于挖到了一个边缘业务的信息泄露，你兴致满满的写完报告提交，心想着这一个漏洞怎么说也要给一个高危，毕竟泄露了全站的用户数据。第二天你起床之后看到已忽略三个字映入你的眼帘原因是该业务已经停止运营，你心想，换一家挖吧。于是你又开始了和昨天一样的循环，又是一个凌晨，挖到了一个sql注入，你心想这波肯定能拿到奖金，第二天你又看到了熟悉的三个字，已忽略，原因是和其他人撞洞了，你心想，这个src应该挖的人很多，换一家挖吧。于是你又开始了和昨天一样的循环，又是一个凌晨，挖到了一个RCE，你心想这波绝对稳了，第二天你醒来看到已确认三个字，你似乎好久没看到这三个字了，你突然感觉付出是值得的，于是你激动的查看奖金发现为0，但积分却加了几百，你心里有点生气，但你想了一下积分可以换京东卡，于是你去积分商城看了一下兑换的奖品，发现自己的积分连一包卫龙辣条都换不了，你心想，这个src太坑了，换一家挖吧。于是你又开始了和昨天一样的循环，又是一个凌晨，挖到了一个SSRF&#43;内网漫游&#43;全站信息泄露&#43;核心业务数据泄露组合拳利用，你心想，这次一定赚大了，看着你身边的iPhone 6手机以及开个虚拟机都卡的小电脑，打开了Apple官网，看着最新款的MacBook Pro。到了第二天，你看到已确认三个字，赶紧查看奖金，发现奖金只奖励了3000元，你有点疑惑，然后你用尽你在安全圈内部所有的人脉关系，你联系到了内部人员，原来是SRC的预算不够了。此时又看到了做抖音自媒体的朋友发布了一个新的作品，视频里面写着“我用过最干净的电脑就是我黑客师傅的电脑，安排！”你看着这低劣忽悠人的内容嗤笑了一声，然后又看到了你自媒体的朋友发的朋友圈，说做黑客科普短视频赚了盆满钵满，你又看了看你SRC平台的3000块钱。你摇摇欲坠的内心将要破防。然后你长舒一口气说，换一家挖吧。
-AboutLinks
-哔哩哔哩 语雀 Github Project
-S1curity 是一个由个人维护的安全知识库，包括但不限于 WriteUp、信息收集、渗透测试 Timeaxis
-2022-08-10 博客成立，命名为 刹那抓住了未来，部署在 Github '><title>关于 - 安全灯塔 ☾˚‧º· ☾˚‧º·</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='时间线
+2022-08-10 博客成立，命名为 LightSec（安全灯塔）部署在 Github '><title>关于 - 安全灯塔 ☾˚‧º· ☾˚‧º·</title>
 
 <link rel='canonical' href='https://kylin.moe/about/'>
 
 <link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='关于'>
-<meta property='og:description' content='你是一个渗透测试工程师，你精通msf sqlmap burp cs等等各种渗透测试工具，你掌握 sql注入 xss csrf ssrf rce 反序列化各种漏洞，你多年寒窗自学终于踏入了安全圈这个大门，某一天你兴致冲冲的打开SRC导航寻找着你今天的目标，你选了一个看起来不像大厂的SRC开始挖洞，从早到凌晨你终于挖到了一个边缘业务的信息泄露，你兴致满满的写完报告提交，心想着这一个漏洞怎么说也要给一个高危，毕竟泄露了全站的用户数据。第二天你起床之后看到已忽略三个字映入你的眼帘原因是该业务已经停止运营，你心想，换一家挖吧。于是你又开始了和昨天一样的循环，又是一个凌晨，挖到了一个sql注入，你心想这波肯定能拿到奖金，第二天你又看到了熟悉的三个字，已忽略，原因是和其他人撞洞了，你心想，这个src应该挖的人很多，换一家挖吧。于是你又开始了和昨天一样的循环，又是一个凌晨，挖到了一个RCE，你心想这波绝对稳了，第二天你醒来看到已确认三个字，你似乎好久没看到这三个字了，你突然感觉付出是值得的，于是你激动的查看奖金发现为0，但积分却加了几百，你心里有点生气，但你想了一下积分可以换京东卡，于是你去积分商城看了一下兑换的奖品，发现自己的积分连一包卫龙辣条都换不了，你心想，这个src太坑了，换一家挖吧。于是你又开始了和昨天一样的循环，又是一个凌晨，挖到了一个SSRF&#43;内网漫游&#43;全站信息泄露&#43;核心业务数据泄露组合拳利用，你心想，这次一定赚大了，看着你身边的iPhone 6手机以及开个虚拟机都卡的小电脑，打开了Apple官网，看着最新款的MacBook Pro。到了第二天，你看到已确认三个字，赶紧查看奖金，发现奖金只奖励了3000元，你有点疑惑，然后你用尽你在安全圈内部所有的人脉关系，你联系到了内部人员，原来是SRC的预算不够了。此时又看到了做抖音自媒体的朋友发布了一个新的作品，视频里面写着“我用过最干净的电脑就是我黑客师傅的电脑，安排！”你看着这低劣忽悠人的内容嗤笑了一声，然后又看到了你自媒体的朋友发的朋友圈，说做黑客科普短视频赚了盆满钵满，你又看了看你SRC平台的3000块钱。你摇摇欲坠的内心将要破防。然后你长舒一口气说，换一家挖吧。
-AboutLinks
-哔哩哔哩 语雀 Github Project
-S1curity 是一个由个人维护的安全知识库，包括但不限于 WriteUp、信息收集、渗透测试 Timeaxis
-2022-08-10 博客成立，命名为 刹那抓住了未来，部署在 Github '>
+<meta property='og:description' content='时间线
+2022-08-10 博客成立，命名为 LightSec（安全灯塔）部署在 Github '>
 <meta property='og:url' content='https://kylin.moe/about/'>
 <meta property='og:site_name' content='LightSec'>
 <meta property='og:type' content='article'><meta property='article:section' content='Page' />
 <meta name="twitter:title" content="关于">
-<meta name="twitter:description" content="你是一个渗透测试工程师，你精通msf sqlmap burp cs等等各种渗透测试工具，你掌握 sql注入 xss csrf ssrf rce 反序列化各种漏洞，你多年寒窗自学终于踏入了安全圈这个大门，某一天你兴致冲冲的打开SRC导航寻找着你今天的目标，你选了一个看起来不像大厂的SRC开始挖洞，从早到凌晨你终于挖到了一个边缘业务的信息泄露，你兴致满满的写完报告提交，心想着这一个漏洞怎么说也要给一个高危，毕竟泄露了全站的用户数据。第二天你起床之后看到已忽略三个字映入你的眼帘原因是该业务已经停止运营，你心想，换一家挖吧。于是你又开始了和昨天一样的循环，又是一个凌晨，挖到了一个sql注入，你心想这波肯定能拿到奖金，第二天你又看到了熟悉的三个字，已忽略，原因是和其他人撞洞了，你心想，这个src应该挖的人很多，换一家挖吧。于是你又开始了和昨天一样的循环，又是一个凌晨，挖到了一个RCE，你心想这波绝对稳了，第二天你醒来看到已确认三个字，你似乎好久没看到这三个字了，你突然感觉付出是值得的，于是你激动的查看奖金发现为0，但积分却加了几百，你心里有点生气，但你想了一下积分可以换京东卡，于是你去积分商城看了一下兑换的奖品，发现自己的积分连一包卫龙辣条都换不了，你心想，这个src太坑了，换一家挖吧。于是你又开始了和昨天一样的循环，又是一个凌晨，挖到了一个SSRF&#43;内网漫游&#43;全站信息泄露&#43;核心业务数据泄露组合拳利用，你心想，这次一定赚大了，看着你身边的iPhone 6手机以及开个虚拟机都卡的小电脑，打开了Apple官网，看着最新款的MacBook Pro。到了第二天，你看到已确认三个字，赶紧查看奖金，发现奖金只奖励了3000元，你有点疑惑，然后你用尽你在安全圈内部所有的人脉关系，你联系到了内部人员，原来是SRC的预算不够了。此时又看到了做抖音自媒体的朋友发布了一个新的作品，视频里面写着“我用过最干净的电脑就是我黑客师傅的电脑，安排！”你看着这低劣忽悠人的内容嗤笑了一声，然后又看到了你自媒体的朋友发的朋友圈，说做黑客科普短视频赚了盆满钵满，你又看了看你SRC平台的3000块钱。你摇摇欲坠的内心将要破防。然后你长舒一口气说，换一家挖吧。
-AboutLinks
-哔哩哔哩 语雀 Github Project
-S1curity 是一个由个人维护的安全知识库，包括但不限于 WriteUp、信息收集、渗透测试 Timeaxis
-2022-08-10 博客成立，命名为 刹那抓住了未来，部署在 Github ">
+<meta name="twitter:description" content="时间线
+2022-08-10 博客成立，命名为 LightSec（安全灯塔）部署在 Github ">
     <link rel="shortcut icon" href="https://zh.wikipedia.org/static/favicon/wikipedia.ico" />
 
     </head>
@@ -83,7 +74,7 @@ S1curity 是一个由个人维护的安全知识库，包括但不限于 WriteUp
         
         <div class="site-meta">
             <h1 class="site-name"><a href="/">LightSec</a></h1>
-            <h2 class="site-description">安全灯塔</h2>
+            <h2 class="site-description">Security Lighthouse - 安全灯塔</h2>
         </div>
     </header><ol class="menu" id="main-menu">
         
@@ -241,24 +232,9 @@ S1curity 是一个由个人维护的安全知识库，包括但不限于 WriteUp
     <section class="article-content">
     
     
-    <p>你是一个渗透测试工程师，你精通msf sqlmap burp cs等等各种渗透测试工具，你掌握 sql注入 xss csrf ssrf rce 反序列化各种漏洞，你多年寒窗自学终于踏入了安全圈这个大门，某一天你兴致冲冲的打开SRC导航寻找着你今天的目标，你选了一个看起来不像大厂的SRC开始挖洞，从早到凌晨你终于挖到了一个边缘业务的信息泄露，你兴致满满的写完报告提交，心想着这一个漏洞怎么说也要给一个高危，毕竟泄露了全站的用户数据。第二天你起床之后看到已忽略三个字映入你的眼帘原因是该业务已经停止运营，你心想，换一家挖吧。于是你又开始了和昨天一样的循环，又是一个凌晨，挖到了一个sql注入，你心想这波肯定能拿到奖金，第二天你又看到了熟悉的三个字，已忽略，原因是和其他人撞洞了，你心想，这个src应该挖的人很多，换一家挖吧。于是你又开始了和昨天一样的循环，又是一个凌晨，挖到了一个RCE，你心想这波绝对稳了，第二天你醒来看到已确认三个字，你似乎好久没看到这三个字了，你突然感觉付出是值得的，于是你激动的查看奖金发现为0，但积分却加了几百，你心里有点生气，但你想了一下积分可以换京东卡，于是你去积分商城看了一下兑换的奖品，发现自己的积分连一包卫龙辣条都换不了，你心想，这个src太坑了，换一家挖吧。于是你又开始了和昨天一样的循环，又是一个凌晨，挖到了一个SSRF+内网漫游+全站信息泄露+核心业务数据泄露组合拳利用，你心想，这次一定赚大了，看着你身边的iPhone 6手机以及开个虚拟机都卡的小电脑，打开了Apple官网，看着最新款的MacBook Pro。到了第二天，你看到已确认三个字，赶紧查看奖金，发现奖金只奖励了3000元，你有点疑惑，然后你用尽你在安全圈内部所有的人脉关系，你联系到了内部人员，原来是SRC的预算不够了。此时又看到了做抖音自媒体的朋友发布了一个新的作品，视频里面写着“我用过最干净的电脑就是我黑客师傅的电脑，安排！”你看着这低劣忽悠人的内容嗤笑了一声，然后又看到了你自媒体的朋友发的朋友圈，说做黑客科普短视频赚了盆满钵满，你又看了看你SRC平台的3000块钱。你摇摇欲坠的内心将要破防。然后你长舒一口气说，换一家挖吧。</p>
-<p><strong>AboutLinks</strong></p>
+    <p><strong>时间线</strong></p>
 <ul>
-<li><a class="link" href="https://space.bilibili.com/670041240"  target="_blank" rel="noopener"
-    >哔哩哔哩</a></li>
-<li><a class="link" href="https://www.yuque.com/kyl1n0"  target="_blank" rel="noopener"
-    >语雀</a></li>
-<li><a class="link" href="https://github.com/MoeKylin"  target="_blank" rel="noopener"
-    >Github</a></li>
-</ul>
-<p><strong>Project</strong></p>
-<ul>
-<li><a class="link" href="https://github.com/MoeKylin/Security"  target="_blank" rel="noopener"
-    >S1curity</a> 是一个由个人维护的安全知识库，包括但不限于 WriteUp、信息收集、渗透测试</li>
-</ul>
-<p><strong>Timeaxis</strong></p>
-<ul>
-<li>2022-08-10 博客成立，命名为 刹那抓住了未来，部署在 Github</li>
+<li>2022-08-10 博客成立，命名为 LightSec（安全灯塔）部署在 Github</li>
 </ul>
 
 </section>
@@ -308,7 +284,7 @@ S1curity 是一个由个人维护的安全知识库，包括但不限于 WriteUp
     }
 </style><script>
     
-    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://unpkg.com/@waline/emojis@1.0.1/weibo"],"locale":{"admin":"Admin","placeholder":null},"requiredMeta":["name","email","url"],"serverURL":"https://waline-comment-moekylin.vercel.app/"});
+    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://unpkg.com/@waline/emojis@1.0.1/weibo","https://unpkg.com/@waline/emojis@1.0.1/bilibili"],"lang":"zh-CN","locale":{"admin":"Admin","placeholder":null},"requiredMeta":["name"],"serverURL":"https://waline-comment-moekylin.vercel.app/"});
 </script>
 
     
@@ -323,7 +299,7 @@ S1curity 是一个由个人维护的安全知识库，包括但不限于 WriteUp
         Powerby
         <a href="https://gohugo.io/" target="_blank"><span style="text-decoration:underline">Hugo</span></a>
         Theme
-        <a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank"><span style="text-decoration:underline">stack</span></a>
+        <a href="https://docs.stack.jimmycai.com/zh/" target="_blank"><span style="text-decoration:underline">stack</span></a>
 
     </section>
 

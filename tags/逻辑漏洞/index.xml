@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>逻辑漏洞 on LightSec</title>
+        <link>https://kylin.moe/tags/%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/</link>
+        <description>Recent content in 逻辑漏洞 on LightSec</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh</language>
+        <lastBuildDate>Thu, 11 Aug 2022 03:34:55 +0800</lastBuildDate><atom:link href="https://kylin.moe/tags/%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>业务逻辑漏洞挖掘</title>
+        <link>https://kylin.moe/p/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/</link>
+        <pubDate>Thu, 11 Aug 2022 03:34:55 +0800</pubDate>
+        
+        <guid>https://kylin.moe/p/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/</guid>
+        <description>&lt;img src="https://img-blog.csdnimg.cn/226e18cf216b4d3795cabaf1bc17ed3c.png" alt="Featured image of post 业务逻辑漏洞挖掘" /&gt;&lt;h2 id=&#34;什么是逻辑漏洞&#34;&gt;什么是逻辑漏洞&lt;/h2&gt;
+&lt;p&gt;逻辑漏洞通常所做的不是针对一个程序进行破坏，而是利用程序设计的缺陷，获取并非属于自己的资源和数据。在程序内通常会出现在：账户、交易、验证码、Session、越权访问等相关功能点；这类漏洞通常是企业所重视的。&lt;/p&gt;
+&lt;h2 id=&#34;交易&#34;&gt;交易&lt;/h2&gt;
+&lt;h3 id=&#34;购买&#34;&gt;购买&lt;/h3&gt;
+&lt;h3 id=&#34;业务风控&#34;&gt;业务风控&lt;/h3&gt;
+&lt;h2 id=&#34;账户&#34;&gt;账户&lt;/h2&gt;
+&lt;h3 id=&#34;注册&#34;&gt;注册&lt;/h3&gt;
+&lt;h3 id=&#34;密码&#34;&gt;密码&lt;/h3&gt;
+&lt;h3 id=&#34;邮箱用户名&#34;&gt;邮箱用户名&lt;/h3&gt;
+&lt;h3 id=&#34;cookie&#34;&gt;Cookie&lt;/h3&gt;
+&lt;h3 id=&#34;手机号用户名&#34;&gt;手机号用户名&lt;/h3&gt;
+&lt;h3 id=&#34;登录&#34;&gt;登录&lt;/h3&gt;
+&lt;h4 id=&#34;暴力破解&#34;&gt;暴力破解&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;登录处未设置验证码&lt;/li&gt;
+&lt;li&gt;未限制用户名在一定时间内登录上限次数&lt;/li&gt;
+&lt;li&gt;未根据请求地址限制登录上限次数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;未严格限制时，可以通过密码字典撞库攻击。&lt;/p&gt;
+&lt;p&gt;tips：数据包传输时尽量不要使用简单的base64加密或者md5加密，使用burpsuite暴力破解时可以对字典的关键字段进行简单的加密。&lt;/p&gt;
+&lt;h3 id=&#34;找回密码&#34;&gt;找回密码&lt;/h3&gt;
+&lt;h3 id=&#34;修改密码&#34;&gt;修改密码&lt;/h3&gt;
+&lt;h3 id=&#34;申诉&#34;&gt;申诉&lt;/h3&gt;
+&lt;h3 id=&#34;信息查询&#34;&gt;信息查询&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;越权查询&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;遍历参数查询&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;2fa&#34;&gt;2FA&lt;/h2&gt;
+&lt;h2 id=&#34;验证码&#34;&gt;验证码&lt;/h2&gt;
+&lt;p&gt;验证码可重用
+验证码可预测
+验证码强度不够
+验证码无时间限制或者失效时间长
+验证码无猜测次数限制
+验证码传递特殊的参数或不传递参数绕过
+验证码可从返回包中直接获取
+验证码不刷新或无效
+验证码数量有限
+验证码在数据包中返回
+修改Cookie绕过
+修改返回包绕过
+验证码在客户端生成或校验
+验证码可OCR或使用机器学习识别
+验证码用于手机短信/邮箱轰炸&lt;/p&gt;
+&lt;h2 id=&#34;session&#34;&gt;Session&lt;/h2&gt;
+&lt;p&gt;Session机制
+Session猜测 / 爆破
+Session伪造
+Session泄漏
+Session Fixation&lt;/p&gt;
+&lt;h2 id=&#34;越权&#34;&gt;越权&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;未授权访问&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;静态文件&lt;/li&gt;
+&lt;li&gt;通过特定url来防止被访问&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;水平越权&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;攻击者可以访问与他拥有相同权限的用户的资源&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;权限类型不变，ID改变&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;其他&#34;&gt;其他&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;用户/订单/优惠券等ID生成有规律，可枚举&lt;/li&gt;
+&lt;li&gt;接口无权限、次数限制&lt;/li&gt;
+&lt;li&gt;加密算法实现误用&lt;/li&gt;
+&lt;li&gt;执行顺序&lt;/li&gt;
+&lt;li&gt;敏感信息泄露&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;随机数安全&#34;&gt;随机数安全&lt;/h2&gt;
+&lt;p&gt;使用不安全的随机数发生器
+使用时间等易猜解的因素作为随机数种子&lt;/p&gt;
+&lt;h2 id=&#34;修复方案&#34;&gt;修复方案&lt;/h2&gt;
+&lt;p&gt;信息泄露会使攻击者获得有价值的系统相关信息。 因此，应始终考虑到您正在泄露何种信息以及恶意用户是否可能使用这些信息。&lt;/p&gt;
+&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://websec.readthedocs.io/zh/latest/vuln/logic.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://websec.readthedocs.io/zh/latest/vuln/logic.html&lt;/a&gt;&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

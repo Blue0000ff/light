@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='什么是逻辑漏洞 逻辑漏洞通常所做的不是针对一个程序进行破坏，而是利用程序设计的缺陷，获取并非属于自己的资源和数据。在程序内通常会出现在：账户、交易、验证码、Session、越权访问等相关功能点；这类漏洞通常是企业所重视的。
+交易 购买 业务风控 账户 注册 密码 邮箱用户名 Cookie 手机号用户名 登录 暴力破解 登录处未设置验证码 未限制用户名在一定时间内登录上限次数 未根据请求地址限制登录上限次数 未严格限制时，可以通过密码字典撞库攻击。
+tips：数据包传输时尽量不要使用简单的base64加密或者md5加密，使用burpsuite暴力破解时可以对字典的关键字段进行简单的加密。
+找回密码 修改密码 申诉 信息查询 越权查询
+遍历参数查询
+2FA 验证码 验证码可重用 验证码可预测 验证码强度不够 验证码无时间限制或者失效时间长 验证码无猜测次数限制 验证码传递特殊的参数或不传递参数绕过 验证码可从返回包中直接获取 验证码不刷新或无效 验证码数量有限 验证码在数据包中返回 修改Cookie绕过 修改返回包绕过 验证码在客户端生成或校验 验证码可OCR或使用机器学习识别 验证码用于手机短信/邮箱轰炸
+Session Session机制 Session猜测 / 爆破 Session伪造 Session泄漏 Session Fixation
+越权 未授权访问
+静态文件 通过特定url来防止被访问 水平越权
+攻击者可以访问与他拥有相同权限的用户的资源
+权限类型不变，ID改变
+其他 用户/订单/优惠券等ID生成有规律，可枚举 接口无权限、次数限制 加密算法实现误用 执行顺序 敏感信息泄露 随机数安全 使用不安全的随机数发生器 使用时间等易猜解的因素作为随机数种子
+修复方案 信息泄露会使攻击者获得有价值的系统相关信息。 因此，应始终考虑到您正在泄露何种信息以及恶意用户是否可能使用这些信息。
+参考链接 https://websec.'><title>业务逻辑漏洞挖掘 - 安全灯塔 ☾˚‧º· ☾˚‧º·</title>
+
+<link rel='canonical' href='https://kylin.moe/p/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/'>
+
+<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='业务逻辑漏洞挖掘'>
+<meta property='og:description' content='什么是逻辑漏洞 逻辑漏洞通常所做的不是针对一个程序进行破坏，而是利用程序设计的缺陷，获取并非属于自己的资源和数据。在程序内通常会出现在：账户、交易、验证码、Session、越权访问等相关功能点；这类漏洞通常是企业所重视的。
+交易 购买 业务风控 账户 注册 密码 邮箱用户名 Cookie 手机号用户名 登录 暴力破解 登录处未设置验证码 未限制用户名在一定时间内登录上限次数 未根据请求地址限制登录上限次数 未严格限制时，可以通过密码字典撞库攻击。
+tips：数据包传输时尽量不要使用简单的base64加密或者md5加密，使用burpsuite暴力破解时可以对字典的关键字段进行简单的加密。
+找回密码 修改密码 申诉 信息查询 越权查询
+遍历参数查询
+2FA 验证码 验证码可重用 验证码可预测 验证码强度不够 验证码无时间限制或者失效时间长 验证码无猜测次数限制 验证码传递特殊的参数或不传递参数绕过 验证码可从返回包中直接获取 验证码不刷新或无效 验证码数量有限 验证码在数据包中返回 修改Cookie绕过 修改返回包绕过 验证码在客户端生成或校验 验证码可OCR或使用机器学习识别 验证码用于手机短信/邮箱轰炸
+Session Session机制 Session猜测 / 爆破 Session伪造 Session泄漏 Session Fixation
+越权 未授权访问
+静态文件 通过特定url来防止被访问 水平越权
+攻击者可以访问与他拥有相同权限的用户的资源
+权限类型不变，ID改变
+其他 用户/订单/优惠券等ID生成有规律，可枚举 接口无权限、次数限制 加密算法实现误用 执行顺序 敏感信息泄露 随机数安全 使用不安全的随机数发生器 使用时间等易猜解的因素作为随机数种子
+修复方案 信息泄露会使攻击者获得有价值的系统相关信息。 因此，应始终考虑到您正在泄露何种信息以及恶意用户是否可能使用这些信息。
+参考链接 https://websec.'>
+<meta property='og:url' content='https://kylin.moe/p/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/'>
+<meta property='og:site_name' content='LightSec'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='逻辑漏洞' /><meta property='article:published_time' content='2022-08-11T03:34:55&#43;08:00'/><meta property='article:modified_time' content='2022-08-11T03:34:55&#43;08:00'/><meta property='og:image' content='https://img-blog.csdnimg.cn/226e18cf216b4d3795cabaf1bc17ed3c.png' />
+<meta name="twitter:title" content="业务逻辑漏洞挖掘">
+<meta name="twitter:description" content="什么是逻辑漏洞 逻辑漏洞通常所做的不是针对一个程序进行破坏，而是利用程序设计的缺陷，获取并非属于自己的资源和数据。在程序内通常会出现在：账户、交易、验证码、Session、越权访问等相关功能点；这类漏洞通常是企业所重视的。
+交易 购买 业务风控 账户 注册 密码 邮箱用户名 Cookie 手机号用户名 登录 暴力破解 登录处未设置验证码 未限制用户名在一定时间内登录上限次数 未根据请求地址限制登录上限次数 未严格限制时，可以通过密码字典撞库攻击。
+tips：数据包传输时尽量不要使用简单的base64加密或者md5加密，使用burpsuite暴力破解时可以对字典的关键字段进行简单的加密。
+找回密码 修改密码 申诉 信息查询 越权查询
+遍历参数查询
+2FA 验证码 验证码可重用 验证码可预测 验证码强度不够 验证码无时间限制或者失效时间长 验证码无猜测次数限制 验证码传递特殊的参数或不传递参数绕过 验证码可从返回包中直接获取 验证码不刷新或无效 验证码数量有限 验证码在数据包中返回 修改Cookie绕过 修改返回包绕过 验证码在客户端生成或校验 验证码可OCR或使用机器学习识别 验证码用于手机短信/邮箱轰炸
+Session Session机制 Session猜测 / 爆破 Session伪造 Session泄漏 Session Fixation
+越权 未授权访问
+静态文件 通过特定url来防止被访问 水平越权
+攻击者可以访问与他拥有相同权限的用户的资源
+权限类型不变，ID改变
+其他 用户/订单/优惠券等ID生成有规律，可枚举 接口无权限、次数限制 加密算法实现误用 执行顺序 敏感信息泄露 随机数安全 使用不安全的随机数发生器 使用时间等易猜解的因素作为随机数种子
+修复方案 信息泄露会使攻击者获得有价值的系统相关信息。 因此，应始终考虑到您正在泄露何种信息以及恶意用户是否可能使用这些信息。
+参考链接 https://websec."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://img-blog.csdnimg.cn/226e18cf216b4d3795cabaf1bc17ed3c.png' />
+    <link rel="shortcut icon" href="https://zh.wikipedia.org/static/favicon/wikipedia.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hub11cf9e5991670e653db6ff28661893d_202264_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🐟</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">LightSec</a></h1>
+            <h2 class="site-description">Security Lighthouse - 安全灯塔</h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>首页</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/">
+                
+                    <img src="https://img-blog.csdnimg.cn/226e18cf216b4d3795cabaf1bc17ed3c.png" loading="lazy" alt="Featured image of post 业务逻辑漏洞挖掘" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/web%E5%AE%89%E5%85%A8/" >
+                web安全
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/">业务逻辑漏洞挖掘</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2022-08-11</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="什么是逻辑漏洞">什么是逻辑漏洞</h2>
+<p>逻辑漏洞通常所做的不是针对一个程序进行破坏，而是利用程序设计的缺陷，获取并非属于自己的资源和数据。在程序内通常会出现在：账户、交易、验证码、Session、越权访问等相关功能点；这类漏洞通常是企业所重视的。</p>
+<h2 id="交易">交易</h2>
+<h3 id="购买">购买</h3>
+<h3 id="业务风控">业务风控</h3>
+<h2 id="账户">账户</h2>
+<h3 id="注册">注册</h3>
+<h3 id="密码">密码</h3>
+<h3 id="邮箱用户名">邮箱用户名</h3>
+<h3 id="cookie">Cookie</h3>
+<h3 id="手机号用户名">手机号用户名</h3>
+<h3 id="登录">登录</h3>
+<h4 id="暴力破解">暴力破解</h4>
+<ul>
+<li>登录处未设置验证码</li>
+<li>未限制用户名在一定时间内登录上限次数</li>
+<li>未根据请求地址限制登录上限次数</li>
+</ul>
+<p>未严格限制时，可以通过密码字典撞库攻击。</p>
+<p>tips：数据包传输时尽量不要使用简单的base64加密或者md5加密，使用burpsuite暴力破解时可以对字典的关键字段进行简单的加密。</p>
+<h3 id="找回密码">找回密码</h3>
+<h3 id="修改密码">修改密码</h3>
+<h3 id="申诉">申诉</h3>
+<h3 id="信息查询">信息查询</h3>
+<p><strong>越权查询</strong></p>
+<p><strong>遍历参数查询</strong></p>
+<h2 id="2fa">2FA</h2>
+<h2 id="验证码">验证码</h2>
+<p>验证码可重用
+验证码可预测
+验证码强度不够
+验证码无时间限制或者失效时间长
+验证码无猜测次数限制
+验证码传递特殊的参数或不传递参数绕过
+验证码可从返回包中直接获取
+验证码不刷新或无效
+验证码数量有限
+验证码在数据包中返回
+修改Cookie绕过
+修改返回包绕过
+验证码在客户端生成或校验
+验证码可OCR或使用机器学习识别
+验证码用于手机短信/邮箱轰炸</p>
+<h2 id="session">Session</h2>
+<p>Session机制
+Session猜测 / 爆破
+Session伪造
+Session泄漏
+Session Fixation</p>
+<h2 id="越权">越权</h2>
+<ul>
+<li>
+<p><strong>未授权访问</strong></p>
+<ul>
+<li>静态文件</li>
+<li>通过特定url来防止被访问</li>
+</ul>
+</li>
+<li>
+<p><strong>水平越权</strong></p>
+</li>
+<li>
+<p>攻击者可以访问与他拥有相同权限的用户的资源</p>
+</li>
+<li>
+<p>权限类型不变，ID改变</p>
+</li>
+</ul>
+<h2 id="其他">其他</h2>
+<ul>
+<li>用户/订单/优惠券等ID生成有规律，可枚举</li>
+<li>接口无权限、次数限制</li>
+<li>加密算法实现误用</li>
+<li>执行顺序</li>
+<li>敏感信息泄露</li>
+</ul>
+<h2 id="随机数安全">随机数安全</h2>
+<p>使用不安全的随机数发生器
+使用时间等易猜解的因素作为随机数种子</p>
+<h2 id="修复方案">修复方案</h2>
+<p>信息泄露会使攻击者获得有价值的系统相关信息。 因此，应始终考虑到您正在泄露何种信息以及恶意用户是否可能使用这些信息。</p>
+<h2 id="参考链接">参考链接</h2>
+<p><a class="link" href="https://websec.readthedocs.io/zh/latest/vuln/logic.html"  target="_blank" rel="noopener"
+    >https://websec.readthedocs.io/zh/latest/vuln/logic.html</a></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/">逻辑漏洞</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/p/cors%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90%E5%85%B1%E4%BA%AB%E6%BC%8F%E6%B4%9E/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://img-blog.csdnimg.cn/img_convert/a09ad76b3dfb19364fa79f034b0f2d85.png" loading="lazy" data-key="" data-hash="https://img-blog.csdnimg.cn/img_convert/a09ad76b3dfb19364fa79f034b0f2d85.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CORS跨域资源共享漏洞</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src='//unpkg.com/@waline/client@v2/dist/waline.js'></script>
+<link href='//unpkg.com/@waline/client@v2/dist/waline.css' rel='stylesheet'/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+        --waline-font-size: var(--article-font-size);
+    }
+    .waline-container .wl-count {
+        color: var(--card-text-color-main);
+    }
+</style><script>
+    
+    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://unpkg.com/@waline/emojis@1.0.1/weibo","https://unpkg.com/@waline/emojis@1.0.1/bilibili"],"lang":"zh-CN","locale":{"admin":"Admin","placeholder":null},"requiredMeta":["name"],"serverURL":"https://waline-comment-moekylin.vercel.app/"});
+</script>
+
+    
+
+    <footer class="site-footer">
+    
+
+    
+    
+    <section class="powerby" style="font-size: 13px;text-align: center;">
+
+        Powerby
+        <a href="https://gohugo.io/" target="_blank"><span style="text-decoration:underline">Hugo</span></a>
+        Theme
+        <a href="https://docs.stack.jimmycai.com/zh/" target="_blank"><span style="text-decoration:underline">stack</span></a>
+
+    </section>
+
+    
+    <section class="powerby" style="font-size: 13px;text-align: center;">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <span id="busuanzi_container_site_pv">总访问量 <span id="busuanzi_value_site_pv"></span> 次</span>
+        <span id="busuanzi_container_site_pv">总访客数 <span id="busuanzi_value_site_uv"></span> 人</span>
+    </section>
+
+    
+
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#什么是逻辑漏洞">什么是逻辑漏洞</a></li>
+    <li><a href="#交易">交易</a>
+      <ol>
+        <li><a href="#购买">购买</a></li>
+        <li><a href="#业务风控">业务风控</a></li>
+      </ol>
+    </li>
+    <li><a href="#账户">账户</a>
+      <ol>
+        <li><a href="#注册">注册</a></li>
+        <li><a href="#密码">密码</a></li>
+        <li><a href="#邮箱用户名">邮箱用户名</a></li>
+        <li><a href="#cookie">Cookie</a></li>
+        <li><a href="#手机号用户名">手机号用户名</a></li>
+        <li><a href="#登录">登录</a>
+          <ol>
+            <li><a href="#暴力破解">暴力破解</a></li>
+          </ol>
+        </li>
+        <li><a href="#找回密码">找回密码</a></li>
+        <li><a href="#修改密码">修改密码</a></li>
+        <li><a href="#申诉">申诉</a></li>
+        <li><a href="#信息查询">信息查询</a></li>
+      </ol>
+    </li>
+    <li><a href="#2fa">2FA</a></li>
+    <li><a href="#验证码">验证码</a></li>
+    <li><a href="#session">Session</a></li>
+    <li><a href="#越权">越权</a></li>
+    <li><a href="#其他">其他</a></li>
+    <li><a href="#随机数安全">随机数安全</a></li>
+    <li><a href="#修复方案">修复方案</a></li>
+    <li><a href="#参考链接">参考链接</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

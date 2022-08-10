@@ -21,7 +21,7 @@
 	
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;漏洞介绍&#34;&gt;漏洞介绍&lt;/h2&gt;
+&lt;h2 id=&#34;什么是cors&#34;&gt;什么是CORS&lt;/h2&gt;
 &lt;p&gt;首先明白几个概念 Origin（源）、SOP（同源策略） 和 CROS（跨域资源访问） 分别是什么&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Origin&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;三个要素构成了Origin，分别是&lt;/p&gt;
@@ -82,7 +82,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;未限制 Access-Control-Allow-Origin（允许访问的源） 字段
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;靶场漏洞复现&#34;&gt;靶场漏洞复现&lt;/h2&gt;
+&lt;/div&gt;&lt;h2 id=&#34;靶场复现&#34;&gt;靶场复现&lt;/h2&gt;
 &lt;p&gt;这里使用 DoraBox靶场: &lt;a class=&#34;link&#34; href=&#34;https://github.com/0verSp4ce/DoraBox&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://github.com/0verSp4ce/DoraBox&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本地搭建环境，访问 URL &lt;code&gt;http://localhost/DoraBox/csrf/userinfo.php&lt;/code&gt;&lt;/p&gt;

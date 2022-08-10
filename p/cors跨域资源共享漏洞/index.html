@@ -2,7 +2,7 @@
 <html lang="zh" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='在 xray 被动扫描的时候无意间看到了 baseline/cors/reflected，因为是未接触过的东西 简单总结一下，虽然到了最后换来了个 风险过低已忽略就是了
-漏洞介绍 首先明白几个概念 Origin（源）、SOP（同源策略） 和 CROS（跨域资源访问） 分别是什么
+什么是CORS 首先明白几个概念 Origin（源）、SOP（同源策略） 和 CROS（跨域资源访问） 分别是什么
 Origin
 三个要素构成了Origin，分别是
 访问 Web 内容时的协议（http://） 域名（example.com） 端口（:80） 三者统称为源 Origin详解
@@ -18,13 +18,13 @@ CORS
 1 2 3 http://example.com https://example.com http://example.com:8080 漏洞是如何产生的
 上文提到了 请求标头 Origin 是可以构建的，假设服务器没有对字段做严格的限制，那么我们可以构造任意字段，让服务器的资源可提供给任意的第三方服务器。
 那么服务器同时满足下面三点要求，则可能构成CORS漏洞
-1 2 3 开启了 CORS（跨域资源共享） 未对Origin（请求标头）的内容做限制 未限制 Access-Control-Allow-Origin（允许访问的源） 字段 靶场漏洞复现 这里使用 DoraBox靶场: https://github.'><title>CORS跨域资源共享漏洞 - 安全灯塔 ☾˚‧º· ☾˚‧º·</title>
+1 2 3 开启了 CORS（跨域资源共享） 未对Origin（请求标头）的内容做限制 未限制 Access-Control-Allow-Origin（允许访问的源） 字段 靶场复现 这里使用 DoraBox靶场: https://github.'><title>CORS跨域资源共享漏洞 - 安全灯塔 ☾˚‧º· ☾˚‧º·</title>
 
 <link rel='canonical' href='https://kylin.moe/p/cors%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90%E5%85%B1%E4%BA%AB%E6%BC%8F%E6%B4%9E/'>
 
 <link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='CORS跨域资源共享漏洞'>
 <meta property='og:description' content='在 xray 被动扫描的时候无意间看到了 baseline/cors/reflected，因为是未接触过的东西 简单总结一下，虽然到了最后换来了个 风险过低已忽略就是了
-漏洞介绍 首先明白几个概念 Origin（源）、SOP（同源策略） 和 CROS（跨域资源访问） 分别是什么
+什么是CORS 首先明白几个概念 Origin（源）、SOP（同源策略） 和 CROS（跨域资源访问） 分别是什么
 Origin
 三个要素构成了Origin，分别是
 访问 Web 内容时的协议（http://） 域名（example.com） 端口（:80） 三者统称为源 Origin详解
@@ -40,13 +40,13 @@ CORS
 1 2 3 http://example.com https://example.com http://example.com:8080 漏洞是如何产生的
 上文提到了 请求标头 Origin 是可以构建的，假设服务器没有对字段做严格的限制，那么我们可以构造任意字段，让服务器的资源可提供给任意的第三方服务器。
 那么服务器同时满足下面三点要求，则可能构成CORS漏洞
-1 2 3 开启了 CORS（跨域资源共享） 未对Origin（请求标头）的内容做限制 未限制 Access-Control-Allow-Origin（允许访问的源） 字段 靶场漏洞复现 这里使用 DoraBox靶场: https://github.'>
+1 2 3 开启了 CORS（跨域资源共享） 未对Origin（请求标头）的内容做限制 未限制 Access-Control-Allow-Origin（允许访问的源） 字段 靶场复现 这里使用 DoraBox靶场: https://github.'>
 <meta property='og:url' content='https://kylin.moe/p/cors%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90%E5%85%B1%E4%BA%AB%E6%BC%8F%E6%B4%9E/'>
 <meta property='og:site_name' content='LightSec'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='CORS' /><meta property='article:published_time' content='2022-08-10T17:16:45&#43;08:00'/><meta property='article:modified_time' content='2022-08-10T17:16:45&#43;08:00'/><meta property='og:image' content='https://img-blog.csdnimg.cn/img_convert/a09ad76b3dfb19364fa79f034b0f2d85.png' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='CORS' /><meta property='article:published_time' content='2022-08-10T17:16:45&#43;08:00'/><meta property='article:modified_time' content='2022-08-11T17:16:45&#43;08:00'/><meta property='og:image' content='https://img-blog.csdnimg.cn/img_convert/a09ad76b3dfb19364fa79f034b0f2d85.png' />
 <meta name="twitter:title" content="CORS跨域资源共享漏洞">
 <meta name="twitter:description" content="在 xray 被动扫描的时候无意间看到了 baseline/cors/reflected，因为是未接触过的东西 简单总结一下，虽然到了最后换来了个 风险过低已忽略就是了
-漏洞介绍 首先明白几个概念 Origin（源）、SOP（同源策略） 和 CROS（跨域资源访问） 分别是什么
+什么是CORS 首先明白几个概念 Origin（源）、SOP（同源策略） 和 CROS（跨域资源访问） 分别是什么
 Origin
 三个要素构成了Origin，分别是
 访问 Web 内容时的协议（http://） 域名（example.com） 端口（:80） 三者统称为源 Origin详解
@@ -62,7 +62,7 @@ CORS
 1 2 3 http://example.com https://example.com http://example.com:8080 漏洞是如何产生的
 上文提到了 请求标头 Origin 是可以构建的，假设服务器没有对字段做严格的限制，那么我们可以构造任意字段，让服务器的资源可提供给任意的第三方服务器。
 那么服务器同时满足下面三点要求，则可能构成CORS漏洞
-1 2 3 开启了 CORS（跨域资源共享） 未对Origin（请求标头）的内容做限制 未限制 Access-Control-Allow-Origin（允许访问的源） 字段 靶场漏洞复现 这里使用 DoraBox靶场: https://github."><meta name="twitter:card" content="summary_large_image">
+1 2 3 开启了 CORS（跨域资源共享） 未对Origin（请求标头）的内容做限制 未限制 Access-Control-Allow-Origin（允许访问的源） 字段 靶场复现 这里使用 DoraBox靶场: https://github."><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://img-blog.csdnimg.cn/img_convert/a09ad76b3dfb19364fa79f034b0f2d85.png' />
     <link rel="shortcut icon" href="https://zh.wikipedia.org/static/favicon/wikipedia.ico" />
 
@@ -123,7 +123,7 @@ CORS
         
         <div class="site-meta">
             <h1 class="site-name"><a href="/">LightSec</a></h1>
-            <h2 class="site-description">安全灯塔</h2>
+            <h2 class="site-description">Security Lighthouse - 安全灯塔</h2>
         </div>
     </header><ol class="menu" id="main-menu">
         
@@ -273,6 +273,10 @@ CORS
     
     <header class="article-category">
         
+            <a href="/categories/web%E5%AE%89%E5%85%A8/" >
+                web安全
+            </a>
+        
     </header>
     
 
@@ -297,7 +301,7 @@ CORS
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Aug 10, 2022</time>
+                <time class="article-time--published">2022-08-10</time>
             </div>
         
 
@@ -321,7 +325,7 @@ CORS
 	
 	
 ></p>
-<h2 id="漏洞介绍">漏洞介绍</h2>
+<h2 id="什么是cors">什么是CORS</h2>
 <p>首先明白几个概念 Origin（源）、SOP（同源策略） 和 CROS（跨域资源访问） 分别是什么</p>
 <p><strong>Origin</strong></p>
 <p>三个要素构成了Origin，分别是</p>
@@ -382,7 +386,7 @@ CORS
 </span></span><span class="line"><span class="cl">未限制 Access-Control-Allow-Origin（允许访问的源） 字段
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="靶场漏洞复现">靶场漏洞复现</h2>
+</div><h2 id="靶场复现">靶场复现</h2>
 <p>这里使用 DoraBox靶场: <a class="link" href="https://github.com/0verSp4ce/DoraBox"  target="_blank" rel="noopener"
     >https://github.com/0verSp4ce/DoraBox</a></p>
 <p>本地搭建环境，访问 URL <code>http://localhost/DoraBox/csrf/userinfo.php</code></p>
@@ -594,7 +598,19 @@ CORS
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    </footer>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            最后更新于 2022-08-11 17:16
+        </span>
+    </section></footer>
 
 
     
@@ -603,6 +619,34 @@ CORS
     
 
     
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/p/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://img-blog.csdnimg.cn/226e18cf216b4d3795cabaf1bc17ed3c.png" loading="lazy" data-key="" data-hash="https://img-blog.csdnimg.cn/226e18cf216b4d3795cabaf1bc17ed3c.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">业务逻辑漏洞挖掘</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
 
      
     
@@ -623,7 +667,7 @@ CORS
     }
 </style><script>
     
-    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://unpkg.com/@waline/emojis@1.0.1/weibo"],"locale":{"admin":"Admin","placeholder":null},"requiredMeta":["name","email","url"],"serverURL":"https://waline-comment-moekylin.vercel.app/"});
+    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://unpkg.com/@waline/emojis@1.0.1/weibo","https://unpkg.com/@waline/emojis@1.0.1/bilibili"],"lang":"zh-CN","locale":{"admin":"Admin","placeholder":null},"requiredMeta":["name"],"serverURL":"https://waline-comment-moekylin.vercel.app/"});
 </script>
 
     
@@ -638,7 +682,7 @@ CORS
         Powerby
         <a href="https://gohugo.io/" target="_blank"><span style="text-decoration:underline">Hugo</span></a>
         Theme
-        <a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank"><span style="text-decoration:underline">stack</span></a>
+        <a href="https://docs.stack.jimmycai.com/zh/" target="_blank"><span style="text-decoration:underline">stack</span></a>
 
     </section>
 
@@ -755,8 +799,8 @@ CORS
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#漏洞介绍">漏洞介绍</a></li>
-    <li><a href="#靶场漏洞复现">靶场漏洞复现</a></li>
+    <li><a href="#什么是cors">什么是CORS</a></li>
+    <li><a href="#靶场复现">靶场复现</a></li>
     <li><a href="#修复方案">修复方案</a></li>
     <li><a href="#参考文献">参考文献</a></li>
   </ol>
