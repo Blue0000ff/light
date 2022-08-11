@@ -12,16 +12,16 @@
         <pubDate>Thu, 11 Aug 2022 03:34:55 +0800</pubDate>
         
         <guid>https://kylin.moe/p/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/</guid>
-        <description>&lt;img src="https://img-blog.csdnimg.cn/226e18cf216b4d3795cabaf1bc17ed3c.png" alt="Featured image of post 业务逻辑漏洞" /&gt;&lt;h2 id=&#34;什么是逻辑漏洞&#34;&gt;什么是逻辑漏洞&lt;/h2&gt;
+        <description>&lt;img src="https://img-blog.csdnimg.cn/226e18cf216b4d3795cabaf1bc17ed3c.png" alt="Featured image of post 业务逻辑漏洞" /&gt;&lt;h2 id=&#34;0x01-什么是逻辑漏洞&#34;&gt;0x01 什么是逻辑漏洞&lt;/h2&gt;
 &lt;p&gt;逻辑漏洞不同于其他的漏洞，通常不会对程序进行破坏，而是利用程序缺陷，来获得不属于自己的信息，例如平行越权和垂直越权；或是利用服务器校验不严格来提交错误的数据数量。&lt;/p&gt;
-&lt;h2 id=&#34;常出现功能点&#34;&gt;常出现功能点&lt;/h2&gt;
+&lt;h2 id=&#34;0x02-常出现功能点&#34;&gt;0x02 常出现功能点&lt;/h2&gt;
 &lt;p&gt;因为是程序的设计缺陷，所以通常逻辑漏洞会出现在用户与服务器进行数据交互的地方&lt;/p&gt;
 &lt;p&gt;跟账户相关的例如：登录、注册、修改密码、找回密码等功能点&lt;/p&gt;
 &lt;p&gt;跟订单相关的例如：提交订单、订单金额、订单数量等功能点&lt;/p&gt;
 &lt;p&gt;跟验证码相关的例如：验证码返回在响应包内、验证码可复用等&lt;/p&gt;
-&lt;h2 id=&#34;逻辑漏洞的危害&#34;&gt;逻辑漏洞的危害&lt;/h2&gt;
+&lt;h2 id=&#34;0x03-逻辑漏洞的危害&#34;&gt;0x03 逻辑漏洞的危害&lt;/h2&gt;
 &lt;p&gt;上面提到了逻辑漏洞的主要危害并不是因受到攻击而导致服务器停止运行，而是服务器对数据包的校验不严谨，导致非法用户获取了不属于自己的资源，常见的危害有：信息泄露、0元订单、未授权访问服务器配置文件等。&lt;/p&gt;
-&lt;h2 id=&#34;一些功能点的例子&#34;&gt;一些功能点的例子&lt;/h2&gt;
+&lt;h2 id=&#34;0x04-附一些功能点的例子&#34;&gt;0x04 附一些功能点的例子&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;评论功能&lt;/li&gt;
 &lt;/ol&gt;
