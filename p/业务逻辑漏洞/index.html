@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='什么是逻辑漏洞 逻辑漏洞通常所做的不是针对一个程序进行破坏，而是利用程序设计的缺陷，获取并非属于自己的资源和数据。在程序内通常会出现在：账户、交易、验证码、Session、越权访问等相关功能点；这类漏洞通常是企业所重视的。
+常出现功能点 评论功能 一些应用程序有一个选项，其中验证审查标记一些勾或提到。试着看看你是否可以在不购买产品的情况下，以经过验证的评论员的身份发布评论。 有些应用程序提供了一个选项，可以提供1到5的评分，尝试超过或低于这个评分——比如提供0或6或 -ve。 尝试看看同一个用户是否可以为一个产品发布多个评级。这是检查竞赛条件的一个有趣的端点。 试着查看文件上传字段是否允许任何文本，经常可以观察到开发人员错过了在这些端点上实现保护。 尝试像其他用户一样发布评论。 尝试在此功能上执行 CSRF，通常不受令牌保护 优惠券功能 应用相同的代码不止一次，以查看优惠券代码是否可重用。 尝试大量分配或 HTTP 参数污染，看看是否可以添加多个优惠券代码，而应用程序只接受来自客户端的一个代码。 尝试在这个字段上执行由于缺少输入消毒而导致的攻击，如 XSS、 SQLi 等 通过篡改服务器端的请求，尝试在折扣项目不涵盖的产品上添加折扣代码。 配送费篡改 尝试篡改送货费率至 -ve 值，看看最终金额是否可以减少。 尝试通过篡改参数来检查免费送货情况。 提现功能 用1种货币支付，比如美元，然后尝试用欧元退款。由于转化率的差异，可能获得更多的金额。 高级功能滥用 尝试使用低权限用户访问一些属于高级用户的特定接口 使用额外的功能取消订阅。如果你得到了退款，但是功能仍然可以使用，这是一个金钱影响问题。 一切程序使用 true/flase 请求/相应的值来验证用户是否有权限访问高级功能 Try using Burp&amp;rsquo;s Match &amp;amp; Replace to see if you can replace these values whenever you browse the app &amp;amp; access the premium features. 尝试使用 Burp’s Match &amp;amp; Replace 来查看是否可以在您浏览应用程序和访问高级功能时替换这些值。 始终检查 Cookie 或本地存储，看看是否有任何变量正在检查用户是否应该访问高级功能。 退款功能滥用 购买一个产品(通常是一些订阅) ，然后要求退款，看看这个功能是否仍然可用。 尝试发出多个订阅取消请求(竞赛条件) ，看看是否可以获得多次退款。 4.'><title>业务逻辑漏洞 - 安全灯塔 ☾˚‧º· ☾˚‧º·</title>
+
+<link rel='canonical' href='https://kylin.moe/p/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/'>
+
+<link rel="stylesheet" href="/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css"><meta property='og:title' content='业务逻辑漏洞'>
+<meta property='og:description' content='什么是逻辑漏洞 逻辑漏洞通常所做的不是针对一个程序进行破坏，而是利用程序设计的缺陷，获取并非属于自己的资源和数据。在程序内通常会出现在：账户、交易、验证码、Session、越权访问等相关功能点；这类漏洞通常是企业所重视的。
+常出现功能点 评论功能 一些应用程序有一个选项，其中验证审查标记一些勾或提到。试着看看你是否可以在不购买产品的情况下，以经过验证的评论员的身份发布评论。 有些应用程序提供了一个选项，可以提供1到5的评分，尝试超过或低于这个评分——比如提供0或6或 -ve。 尝试看看同一个用户是否可以为一个产品发布多个评级。这是检查竞赛条件的一个有趣的端点。 试着查看文件上传字段是否允许任何文本，经常可以观察到开发人员错过了在这些端点上实现保护。 尝试像其他用户一样发布评论。 尝试在此功能上执行 CSRF，通常不受令牌保护 优惠券功能 应用相同的代码不止一次，以查看优惠券代码是否可重用。 尝试大量分配或 HTTP 参数污染，看看是否可以添加多个优惠券代码，而应用程序只接受来自客户端的一个代码。 尝试在这个字段上执行由于缺少输入消毒而导致的攻击，如 XSS、 SQLi 等 通过篡改服务器端的请求，尝试在折扣项目不涵盖的产品上添加折扣代码。 配送费篡改 尝试篡改送货费率至 -ve 值，看看最终金额是否可以减少。 尝试通过篡改参数来检查免费送货情况。 提现功能 用1种货币支付，比如美元，然后尝试用欧元退款。由于转化率的差异，可能获得更多的金额。 高级功能滥用 尝试使用低权限用户访问一些属于高级用户的特定接口 使用额外的功能取消订阅。如果你得到了退款，但是功能仍然可以使用，这是一个金钱影响问题。 一切程序使用 true/flase 请求/相应的值来验证用户是否有权限访问高级功能 Try using Burp&amp;rsquo;s Match &amp;amp; Replace to see if you can replace these values whenever you browse the app &amp;amp; access the premium features. 尝试使用 Burp’s Match &amp;amp; Replace 来查看是否可以在您浏览应用程序和访问高级功能时替换这些值。 始终检查 Cookie 或本地存储，看看是否有任何变量正在检查用户是否应该访问高级功能。 退款功能滥用 购买一个产品(通常是一些订阅) ，然后要求退款，看看这个功能是否仍然可用。 尝试发出多个订阅取消请求(竞赛条件) ，看看是否可以获得多次退款。 4.'>
+<meta property='og:url' content='https://kylin.moe/p/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/'>
+<meta property='og:site_name' content='LightSec'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='逻辑漏洞' /><meta property='article:published_time' content='2022-08-11T03:34:55&#43;08:00'/><meta property='article:modified_time' content='2022-08-11T03:34:55&#43;08:00'/><meta property='og:image' content='https://img-blog.csdnimg.cn/226e18cf216b4d3795cabaf1bc17ed3c.png' />
+<meta name="twitter:title" content="业务逻辑漏洞">
+<meta name="twitter:description" content="什么是逻辑漏洞 逻辑漏洞通常所做的不是针对一个程序进行破坏，而是利用程序设计的缺陷，获取并非属于自己的资源和数据。在程序内通常会出现在：账户、交易、验证码、Session、越权访问等相关功能点；这类漏洞通常是企业所重视的。
+常出现功能点 评论功能 一些应用程序有一个选项，其中验证审查标记一些勾或提到。试着看看你是否可以在不购买产品的情况下，以经过验证的评论员的身份发布评论。 有些应用程序提供了一个选项，可以提供1到5的评分，尝试超过或低于这个评分——比如提供0或6或 -ve。 尝试看看同一个用户是否可以为一个产品发布多个评级。这是检查竞赛条件的一个有趣的端点。 试着查看文件上传字段是否允许任何文本，经常可以观察到开发人员错过了在这些端点上实现保护。 尝试像其他用户一样发布评论。 尝试在此功能上执行 CSRF，通常不受令牌保护 优惠券功能 应用相同的代码不止一次，以查看优惠券代码是否可重用。 尝试大量分配或 HTTP 参数污染，看看是否可以添加多个优惠券代码，而应用程序只接受来自客户端的一个代码。 尝试在这个字段上执行由于缺少输入消毒而导致的攻击，如 XSS、 SQLi 等 通过篡改服务器端的请求，尝试在折扣项目不涵盖的产品上添加折扣代码。 配送费篡改 尝试篡改送货费率至 -ve 值，看看最终金额是否可以减少。 尝试通过篡改参数来检查免费送货情况。 提现功能 用1种货币支付，比如美元，然后尝试用欧元退款。由于转化率的差异，可能获得更多的金额。 高级功能滥用 尝试使用低权限用户访问一些属于高级用户的特定接口 使用额外的功能取消订阅。如果你得到了退款，但是功能仍然可以使用，这是一个金钱影响问题。 一切程序使用 true/flase 请求/相应的值来验证用户是否有权限访问高级功能 Try using Burp&amp;rsquo;s Match &amp;amp; Replace to see if you can replace these values whenever you browse the app &amp;amp; access the premium features. 尝试使用 Burp’s Match &amp;amp; Replace 来查看是否可以在您浏览应用程序和访问高级功能时替换这些值。 始终检查 Cookie 或本地存储，看看是否有任何变量正在检查用户是否应该访问高级功能。 退款功能滥用 购买一个产品(通常是一些订阅) ，然后要求退款，看看这个功能是否仍然可用。 尝试发出多个订阅取消请求(竞赛条件) ，看看是否可以获得多次退款。 4."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://img-blog.csdnimg.cn/226e18cf216b4d3795cabaf1bc17ed3c.png' />
+    <link rel="shortcut icon" href="https://zh.wikipedia.org/static/favicon/wikipedia.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hub11cf9e5991670e653db6ff28661893d_202264_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🐟</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">LightSec</a></h1>
+            <h2 class="site-description">Security Lighthouse - 安全灯塔</h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>首页</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/">
+                
+                    <img src="https://img-blog.csdnimg.cn/226e18cf216b4d3795cabaf1bc17ed3c.png" loading="lazy" alt="Featured image of post 业务逻辑漏洞" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/web%E5%AE%89%E5%85%A8/" >
+                web安全
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/">业务逻辑漏洞</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2022-08-11</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="什么是逻辑漏洞">什么是逻辑漏洞</h2>
+<p>逻辑漏洞通常所做的不是针对一个程序进行破坏，而是利用程序设计的缺陷，获取并非属于自己的资源和数据。在程序内通常会出现在：账户、交易、验证码、Session、越权访问等相关功能点；这类漏洞通常是企业所重视的。</p>
+<h2 id="常出现功能点">常出现功能点</h2>
+<ol>
+<li>评论功能</li>
+</ol>
+<ul>
+<li>一些应用程序有一个选项，其中验证审查标记一些勾或提到。试着看看你是否可以在不购买产品的情况下，以经过验证的评论员的身份发布评论。</li>
+<li>有些应用程序提供了一个选项，可以提供1到5的评分，尝试超过或低于这个评分——比如提供0或6或 -ve。</li>
+<li>尝试看看同一个用户是否可以为一个产品发布多个评级。这是检查竞赛条件的一个有趣的端点。</li>
+<li>试着查看文件上传字段是否允许任何文本，经常可以观察到开发人员错过了在这些端点上实现保护。</li>
+<li>尝试像其他用户一样发布评论。</li>
+<li>尝试在此功能上执行 CSRF，通常不受令牌保护</li>
+</ul>
+<ol start="2">
+<li>优惠券功能</li>
+</ol>
+<ul>
+<li>应用相同的代码不止一次，以查看优惠券代码是否可重用。</li>
+<li>尝试大量分配或 HTTP 参数污染，看看是否可以添加多个优惠券代码，而应用程序只接受来自客户端的一个代码。</li>
+<li>尝试在这个字段上执行由于缺少输入消毒而导致的攻击，如 XSS、 SQLi 等</li>
+<li>通过篡改服务器端的请求，尝试在折扣项目不涵盖的产品上添加折扣代码。</li>
+</ul>
+<ol start="3">
+<li>配送费篡改</li>
+</ol>
+<ul>
+<li>尝试篡改送货费率至 -ve 值，看看最终金额是否可以减少。</li>
+<li>尝试通过篡改参数来检查免费送货情况。</li>
+</ul>
+<ol start="4">
+<li>提现功能</li>
+</ol>
+<ul>
+<li>用1种货币支付，比如美元，然后尝试用欧元退款。由于转化率的差异，可能获得更多的金额。</li>
+</ul>
+<ol start="5">
+<li>高级功能滥用</li>
+</ol>
+<ul>
+<li>尝试使用低权限用户访问一些属于高级用户的特定接口</li>
+<li>使用额外的功能取消订阅。如果你得到了退款，但是功能仍然可以使用，这是一个金钱影响问题。</li>
+<li>一切程序使用 true/flase 请求/相应的值来验证用户是否有权限访问高级功能</li>
+<li>Try using Burp&rsquo;s Match &amp; Replace to see if you can replace these values whenever you browse the app &amp; access the premium features.</li>
+<li>尝试使用 Burp’s Match &amp; Replace 来查看是否可以在您浏览应用程序和访问高级功能时替换这些值。</li>
+<li>始终检查 Cookie 或本地存储，看看是否有任何变量正在检查用户是否应该访问高级功能。</li>
+</ul>
+<ol start="6">
+<li>退款功能滥用</li>
+</ol>
+<ul>
+<li>购买一个产品(通常是一些订阅) ，然后要求退款，看看这个功能是否仍然可用。</li>
+<li>尝试发出多个订阅取消请求(竞赛条件) ，看看是否可以获得多次退款。</li>
+<li>4.提现功能，涉及到的不同汇率提现</li>
+</ul>
+<ol start="7">
+<li>购物车/愿望单功能</li>
+</ol>
+<ul>
+<li>加一个负数的产品和其他正数的产品来平衡数量。</li>
+<li>Add a product in more than the available quantity.</li>
+<li>添加超过可用数量的产品。</li>
+<li>尝试看看当你添加一个产品到你的愿望清单，并将其移动到一个购物车，如果可能的话，将其移动到其他用户的购物车或从那里删除它。（平行越权其他用户）</li>
+</ul>
+<ol start="8">
+<li>线程注释功能</li>
+</ol>
+<ul>
+<li>Unlimited Comments on a thread</li>
+<li>线程上的无限注释</li>
+<li>Suppose a user can comment only once, try race conditions here to see if multiple comments are possible.</li>
+<li>假设一个用户只能注释一次，那么在这里尝试竞态条件，看看是否可能有多个注释。</li>
+<li>假设有一个选项: 经过验证的用户(或某些有特权的用户)试图篡改各种参数，以查看是否可以执行此活动。</li>
+<li>尝试模仿其他用户发表评论。</li>
+</ul>
+<ol start="9">
+<li>参数篡改</li>
+</ol>
+<ul>
+<li>篡改支付或关键字段来操纵它们的值</li>
+<li>Add multiple fields or unexpected fields by abusing HTTP Parameter Pollution &amp; Mass Assignment</li>
+<li>通过滥用 HTTP 参数污染和质量分配添加多个字段或意外字段</li>
+<li>Response Manipulation to bypass certain restrictions such as 2FA Bypass</li>
+<li>响应操作，以绕过某些限制，如2FA 旁路</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/">逻辑漏洞</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/p/cors%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90%E5%85%B1%E4%BA%AB%E6%BC%8F%E6%B4%9E/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://img-blog.csdnimg.cn/img_convert/a09ad76b3dfb19364fa79f034b0f2d85.png" loading="lazy" data-key="" data-hash="https://img-blog.csdnimg.cn/img_convert/a09ad76b3dfb19364fa79f034b0f2d85.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CORS跨域资源共享漏洞</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src='//unpkg.com/@waline/client@v2/dist/waline.js'></script>
+<link href='//unpkg.com/@waline/client@v2/dist/waline.css' rel='stylesheet'/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+        --waline-font-size: var(--article-font-size);
+    }
+    .waline-container .wl-count {
+        color: var(--card-text-color-main);
+    }
+</style><script>
+    
+    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://unpkg.com/@waline/emojis@1.0.1/weibo","https://unpkg.com/@waline/emojis@1.0.1/bilibili"],"lang":"zh-CN","locale":{"admin":"Admin","placeholder":null},"requiredMeta":["name"],"serverURL":"https://waline-comment-moekylin.vercel.app/"});
+</script>
+
+    
+
+    <footer class="site-footer">
+    
+
+    
+    
+    <section class="powerby" style="font-size: 13px;text-align: center;">
+
+        Powerby
+        <a href="https://gohugo.io/" target="_blank"><span style="text-decoration:underline">Hugo</span></a>
+        Theme
+        <a href="https://docs.stack.jimmycai.com/zh/" target="_blank"><span style="text-decoration:underline">stack</span></a>
+
+    </section>
+
+    
+    <section class="powerby" style="font-size: 13px;text-align: center;">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <span id="busuanzi_container_site_pv">总访问量 <span id="busuanzi_value_site_pv"></span> 次</span>
+        <span id="busuanzi_container_site_pv">总访客数 <span id="busuanzi_value_site_uv"></span> 人</span>
+    </section>
+
+    
+
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#什么是逻辑漏洞">什么是逻辑漏洞</a></li>
+    <li><a href="#常出现功能点">常出现功能点</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

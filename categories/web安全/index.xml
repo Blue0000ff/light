@@ -7,95 +7,96 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh</language>
         <lastBuildDate>Thu, 11 Aug 2022 03:34:55 +0800</lastBuildDate><atom:link href="https://kylin.moe/categories/web%E5%AE%89%E5%85%A8/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>业务逻辑漏洞挖掘</title>
-        <link>https://kylin.moe/p/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/</link>
+        <title>业务逻辑漏洞</title>
+        <link>https://kylin.moe/p/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/</link>
         <pubDate>Thu, 11 Aug 2022 03:34:55 +0800</pubDate>
         
-        <guid>https://kylin.moe/p/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/</guid>
-        <description>&lt;img src="https://img-blog.csdnimg.cn/226e18cf216b4d3795cabaf1bc17ed3c.png" alt="Featured image of post 业务逻辑漏洞挖掘" /&gt;&lt;h2 id=&#34;什么是逻辑漏洞&#34;&gt;什么是逻辑漏洞&lt;/h2&gt;
+        <guid>https://kylin.moe/p/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/</guid>
+        <description>&lt;img src="https://img-blog.csdnimg.cn/226e18cf216b4d3795cabaf1bc17ed3c.png" alt="Featured image of post 业务逻辑漏洞" /&gt;&lt;h2 id=&#34;什么是逻辑漏洞&#34;&gt;什么是逻辑漏洞&lt;/h2&gt;
 &lt;p&gt;逻辑漏洞通常所做的不是针对一个程序进行破坏，而是利用程序设计的缺陷，获取并非属于自己的资源和数据。在程序内通常会出现在：账户、交易、验证码、Session、越权访问等相关功能点；这类漏洞通常是企业所重视的。&lt;/p&gt;
-&lt;h2 id=&#34;交易&#34;&gt;交易&lt;/h2&gt;
-&lt;h3 id=&#34;购买&#34;&gt;购买&lt;/h3&gt;
-&lt;h3 id=&#34;业务风控&#34;&gt;业务风控&lt;/h3&gt;
-&lt;h2 id=&#34;账户&#34;&gt;账户&lt;/h2&gt;
-&lt;h3 id=&#34;注册&#34;&gt;注册&lt;/h3&gt;
-&lt;h3 id=&#34;密码&#34;&gt;密码&lt;/h3&gt;
-&lt;h3 id=&#34;邮箱用户名&#34;&gt;邮箱用户名&lt;/h3&gt;
-&lt;h3 id=&#34;cookie&#34;&gt;Cookie&lt;/h3&gt;
-&lt;h3 id=&#34;手机号用户名&#34;&gt;手机号用户名&lt;/h3&gt;
-&lt;h3 id=&#34;登录&#34;&gt;登录&lt;/h3&gt;
-&lt;h4 id=&#34;暴力破解&#34;&gt;暴力破解&lt;/h4&gt;
+&lt;h2 id=&#34;常出现功能点&#34;&gt;常出现功能点&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;评论功能&lt;/li&gt;
+&lt;/ol&gt;
 &lt;ul&gt;
-&lt;li&gt;登录处未设置验证码&lt;/li&gt;
-&lt;li&gt;未限制用户名在一定时间内登录上限次数&lt;/li&gt;
-&lt;li&gt;未根据请求地址限制登录上限次数&lt;/li&gt;
+&lt;li&gt;一些应用程序有一个选项，其中验证审查标记一些勾或提到。试着看看你是否可以在不购买产品的情况下，以经过验证的评论员的身份发布评论。&lt;/li&gt;
+&lt;li&gt;有些应用程序提供了一个选项，可以提供1到5的评分，尝试超过或低于这个评分——比如提供0或6或 -ve。&lt;/li&gt;
+&lt;li&gt;尝试看看同一个用户是否可以为一个产品发布多个评级。这是检查竞赛条件的一个有趣的端点。&lt;/li&gt;
+&lt;li&gt;试着查看文件上传字段是否允许任何文本，经常可以观察到开发人员错过了在这些端点上实现保护。&lt;/li&gt;
+&lt;li&gt;尝试像其他用户一样发布评论。&lt;/li&gt;
+&lt;li&gt;尝试在此功能上执行 CSRF，通常不受令牌保护&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;未严格限制时，可以通过密码字典撞库攻击。&lt;/p&gt;
-&lt;p&gt;tips：数据包传输时尽量不要使用简单的base64加密或者md5加密，使用burpsuite暴力破解时可以对字典的关键字段进行简单的加密。&lt;/p&gt;
-&lt;h3 id=&#34;找回密码&#34;&gt;找回密码&lt;/h3&gt;
-&lt;h3 id=&#34;修改密码&#34;&gt;修改密码&lt;/h3&gt;
-&lt;h3 id=&#34;申诉&#34;&gt;申诉&lt;/h3&gt;
-&lt;h3 id=&#34;信息查询&#34;&gt;信息查询&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;越权查询&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;遍历参数查询&lt;/strong&gt;&lt;/p&gt;
-&lt;h2 id=&#34;2fa&#34;&gt;2FA&lt;/h2&gt;
-&lt;h2 id=&#34;验证码&#34;&gt;验证码&lt;/h2&gt;
-&lt;p&gt;验证码可重用
-验证码可预测
-验证码强度不够
-验证码无时间限制或者失效时间长
-验证码无猜测次数限制
-验证码传递特殊的参数或不传递参数绕过
-验证码可从返回包中直接获取
-验证码不刷新或无效
-验证码数量有限
-验证码在数据包中返回
-修改Cookie绕过
-修改返回包绕过
-验证码在客户端生成或校验
-验证码可OCR或使用机器学习识别
-验证码用于手机短信/邮箱轰炸&lt;/p&gt;
-&lt;h2 id=&#34;session&#34;&gt;Session&lt;/h2&gt;
-&lt;p&gt;Session机制
-Session猜测 / 爆破
-Session伪造
-Session泄漏
-Session Fixation&lt;/p&gt;
-&lt;h2 id=&#34;越权&#34;&gt;越权&lt;/h2&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;优惠券功能&lt;/li&gt;
+&lt;/ol&gt;
 &lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;未授权访问&lt;/strong&gt;&lt;/p&gt;
+&lt;li&gt;应用相同的代码不止一次，以查看优惠券代码是否可重用。&lt;/li&gt;
+&lt;li&gt;尝试大量分配或 HTTP 参数污染，看看是否可以添加多个优惠券代码，而应用程序只接受来自客户端的一个代码。&lt;/li&gt;
+&lt;li&gt;尝试在这个字段上执行由于缺少输入消毒而导致的攻击，如 XSS、 SQLi 等&lt;/li&gt;
+&lt;li&gt;通过篡改服务器端的请求，尝试在折扣项目不涵盖的产品上添加折扣代码。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;配送费篡改&lt;/li&gt;
+&lt;/ol&gt;
 &lt;ul&gt;
-&lt;li&gt;静态文件&lt;/li&gt;
-&lt;li&gt;通过特定url来防止被访问&lt;/li&gt;
+&lt;li&gt;尝试篡改送货费率至 -ve 值，看看最终金额是否可以减少。&lt;/li&gt;
+&lt;li&gt;尝试通过篡改参数来检查免费送货情况。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;水平越权&lt;/strong&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;攻击者可以访问与他拥有相同权限的用户的资源&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;权限类型不变，ID改变&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;其他&#34;&gt;其他&lt;/h2&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;提现功能&lt;/li&gt;
+&lt;/ol&gt;
 &lt;ul&gt;
-&lt;li&gt;用户/订单/优惠券等ID生成有规律，可枚举&lt;/li&gt;
-&lt;li&gt;接口无权限、次数限制&lt;/li&gt;
-&lt;li&gt;加密算法实现误用&lt;/li&gt;
-&lt;li&gt;执行顺序&lt;/li&gt;
-&lt;li&gt;敏感信息泄露&lt;/li&gt;
+&lt;li&gt;用1种货币支付，比如美元，然后尝试用欧元退款。由于转化率的差异，可能获得更多的金额。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;随机数安全&#34;&gt;随机数安全&lt;/h2&gt;
-&lt;p&gt;使用不安全的随机数发生器
-使用时间等易猜解的因素作为随机数种子&lt;/p&gt;
-&lt;h2 id=&#34;修复方案&#34;&gt;修复方案&lt;/h2&gt;
-&lt;p&gt;信息泄露会使攻击者获得有价值的系统相关信息。 因此，应始终考虑到您正在泄露何种信息以及恶意用户是否可能使用这些信息。&lt;/p&gt;
-&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://websec.readthedocs.io/zh/latest/vuln/logic.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://websec.readthedocs.io/zh/latest/vuln/logic.html&lt;/a&gt;&lt;/p&gt;
+&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;高级功能滥用&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;尝试使用低权限用户访问一些属于高级用户的特定接口&lt;/li&gt;
+&lt;li&gt;使用额外的功能取消订阅。如果你得到了退款，但是功能仍然可以使用，这是一个金钱影响问题。&lt;/li&gt;
+&lt;li&gt;一切程序使用 true/flase 请求/相应的值来验证用户是否有权限访问高级功能&lt;/li&gt;
+&lt;li&gt;Try using Burp&amp;rsquo;s Match &amp;amp; Replace to see if you can replace these values whenever you browse the app &amp;amp; access the premium features.&lt;/li&gt;
+&lt;li&gt;尝试使用 Burp’s Match &amp;amp; Replace 来查看是否可以在您浏览应用程序和访问高级功能时替换这些值。&lt;/li&gt;
+&lt;li&gt;始终检查 Cookie 或本地存储，看看是否有任何变量正在检查用户是否应该访问高级功能。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;6&#34;&gt;
+&lt;li&gt;退款功能滥用&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;购买一个产品(通常是一些订阅) ，然后要求退款，看看这个功能是否仍然可用。&lt;/li&gt;
+&lt;li&gt;尝试发出多个订阅取消请求(竞赛条件) ，看看是否可以获得多次退款。&lt;/li&gt;
+&lt;li&gt;4.提现功能，涉及到的不同汇率提现&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;7&#34;&gt;
+&lt;li&gt;购物车/愿望单功能&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;加一个负数的产品和其他正数的产品来平衡数量。&lt;/li&gt;
+&lt;li&gt;Add a product in more than the available quantity.&lt;/li&gt;
+&lt;li&gt;添加超过可用数量的产品。&lt;/li&gt;
+&lt;li&gt;尝试看看当你添加一个产品到你的愿望清单，并将其移动到一个购物车，如果可能的话，将其移动到其他用户的购物车或从那里删除它。（平行越权其他用户）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;8&#34;&gt;
+&lt;li&gt;线程注释功能&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;Unlimited Comments on a thread&lt;/li&gt;
+&lt;li&gt;线程上的无限注释&lt;/li&gt;
+&lt;li&gt;Suppose a user can comment only once, try race conditions here to see if multiple comments are possible.&lt;/li&gt;
+&lt;li&gt;假设一个用户只能注释一次，那么在这里尝试竞态条件，看看是否可能有多个注释。&lt;/li&gt;
+&lt;li&gt;假设有一个选项: 经过验证的用户(或某些有特权的用户)试图篡改各种参数，以查看是否可以执行此活动。&lt;/li&gt;
+&lt;li&gt;尝试模仿其他用户发表评论。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;9&#34;&gt;
+&lt;li&gt;参数篡改&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;篡改支付或关键字段来操纵它们的值&lt;/li&gt;
+&lt;li&gt;Add multiple fields or unexpected fields by abusing HTTP Parameter Pollution &amp;amp; Mass Assignment&lt;/li&gt;
+&lt;li&gt;通过滥用 HTTP 参数污染和质量分配添加多个字段或意外字段&lt;/li&gt;
+&lt;li&gt;Response Manipulation to bypass certain restrictions such as 2FA Bypass&lt;/li&gt;
+&lt;li&gt;响应操作，以绕过某些限制，如2FA 旁路&lt;/li&gt;
+&lt;/ul&gt;
 </description>
         </item>
         <item>
