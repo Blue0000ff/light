@@ -7,12 +7,12 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh</language>
         <lastBuildDate>Thu, 11 Aug 2022 03:34:55 +0800</lastBuildDate><atom:link href="https://kylin.moe/categories/web%E5%AE%89%E5%85%A8/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>业务逻辑漏洞</title>
-        <link>https://kylin.moe/p/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/</link>
+        <title>业务逻辑漏洞速读</title>
+        <link>https://kylin.moe/p/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E%E9%80%9F%E8%AF%BB/</link>
         <pubDate>Thu, 11 Aug 2022 03:34:55 +0800</pubDate>
         
-        <guid>https://kylin.moe/p/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/</guid>
-        <description>&lt;img src="https://img-blog.csdnimg.cn/226e18cf216b4d3795cabaf1bc17ed3c.png" alt="Featured image of post 业务逻辑漏洞" /&gt;&lt;h2 id=&#34;0x01-什么是逻辑漏洞&#34;&gt;0x01 什么是逻辑漏洞&lt;/h2&gt;
+        <guid>https://kylin.moe/p/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E%E9%80%9F%E8%AF%BB/</guid>
+        <description>&lt;img src="https://img-blog.csdnimg.cn/226e18cf216b4d3795cabaf1bc17ed3c.png" alt="Featured image of post 业务逻辑漏洞速读" /&gt;&lt;h2 id=&#34;0x01-什么是逻辑漏洞&#34;&gt;0x01 什么是逻辑漏洞&lt;/h2&gt;
 &lt;p&gt;逻辑漏洞不同于其他的漏洞，通常不会对程序进行破坏，而是利用程序缺陷，来获得不属于自己的信息，例如平行越权和垂直越权；或是利用服务器校验不严格来提交错误的数据数量。&lt;/p&gt;
 &lt;h2 id=&#34;0x02-常出现功能点&#34;&gt;0x02 常出现功能点&lt;/h2&gt;
 &lt;p&gt;因为是程序的设计缺陷，所以通常逻辑漏洞会出现在用户与服务器进行数据交互的地方&lt;/p&gt;
